@@ -60,7 +60,7 @@ public class ComedianServiceImpl implements ComedianService {
         return false;
     }
 
-    //(05) to get all comedians
+    //(05) to get all the comedians
     @Override
     public Collection<Comedian> getComedians() {
         return repository.findAll();
