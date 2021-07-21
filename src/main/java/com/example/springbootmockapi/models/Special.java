@@ -1,5 +1,6 @@
 package com.example.springbootmockapi.models;
 
+
 public class Special {
 
     private int id;

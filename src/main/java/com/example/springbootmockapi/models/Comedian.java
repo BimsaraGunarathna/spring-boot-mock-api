@@ -5,12 +5,16 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Objects;
+
+
 
 @Entity
-@NoArgsConstructor @Getter @Setter @ToString @EqualsAndHashCode
-@Table(name = "Comedian")
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+//@Table(name = "Comedian")
 public class Comedian {
     private @Id
     @GeneratedValue
@@ -18,15 +22,16 @@ public class Comedian {
     private String name;
     private String role;
 
+    /***
+     *
+     * @param name
+     * @param role
+     */
     public Comedian(String name, String role) {
         this.name = name;
         this.role = role;
     }
 
-    public Comedian(Long id, String name, String role) {
-        this.name = name;
-        this.role = role;
-    }
     /*
     public Comedian(String name, String role) {
         this.name = name;

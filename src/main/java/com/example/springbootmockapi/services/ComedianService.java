@@ -1,13 +1,18 @@
-package com.example.springbootmockapi.services.comedian;
+package com.example.springbootmockapi.services;
 
 import com.example.springbootmockapi.models.Comedian;
 
 import java.util.Collection;
 
+/***
+ * To regulate ComedianService
+ * @author Bimsara Gunarathna
+ * @since 7/19/2021
+ */
 public interface ComedianService {
-    public abstract Comedian getAComedian(String id);
-    public abstract Comedian createComedian(Comedian comedian);
-    public abstract Comedian updateComedian(String id, Comedian comedian);
-    public abstract boolean deleteComedian(String id);
-    public abstract Collection<Comedian> getComedians();
+    Comedian getAComedian(String id);
+    Comedian createComedian(Comedian comedian);
+    Comedian updateComedian(String id, Comedian comedian);
+    boolean deleteComedian(String id);
+    Collection<Comedian> getComedians();
 }
