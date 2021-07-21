@@ -1,4 +1,4 @@
-package com.example.springbootmockapi.models;
+package com.example.springbootmockapi.model.comedian;
 
 import lombok.*;
 
@@ -22,11 +22,6 @@ public class Comedian {
     private String name;
     private String role;
 
-    /***
-     *
-     * @param name
-     * @param role
-     */
     public Comedian(String name, String role) {
         this.name = name;
         this.role = role;

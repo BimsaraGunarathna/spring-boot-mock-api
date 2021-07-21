@@ -1,6 +1,6 @@
-package com.example.springbootmockapi.services;
+package com.example.springbootmockapi.service;
 
-import com.example.springbootmockapi.models.Comedian;
+import com.example.springbootmockapi.model.comedian.Comedian;
 
 import java.util.Collection;
 

@@ -1,4 +1,4 @@
-package com.example.springbootmockapi.models;
+package com.example.springbootmockapi.model;
 
 
 public class Special {

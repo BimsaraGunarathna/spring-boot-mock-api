@@ -1,7 +1,7 @@
-package com.example.springbootmockapi.controllers;
+package com.example.springbootmockapi.controller;
 
-import com.example.springbootmockapi.models.Comedian;
-import com.example.springbootmockapi.services.ComedianService;
+import com.example.springbootmockapi.model.comedian.Comedian;
+import com.example.springbootmockapi.service.ComedianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

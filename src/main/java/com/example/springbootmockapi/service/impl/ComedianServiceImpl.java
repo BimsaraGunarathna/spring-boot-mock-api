@@ -1,9 +1,9 @@
-package com.example.springbootmockapi.services.impl;
+package com.example.springbootmockapi.service.impl;
 
-import com.example.springbootmockapi.exceptions.ComedianNotFoundException;
-import com.example.springbootmockapi.models.Comedian;
-import com.example.springbootmockapi.repositories.ComedianRepository;
-import com.example.springbootmockapi.services.ComedianService;
+import com.example.springbootmockapi.exception.ComedianNotFoundException;
+import com.example.springbootmockapi.model.comedian.Comedian;
+import com.example.springbootmockapi.repository.ComedianRepository;
+import com.example.springbootmockapi.service.ComedianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
-package com.example.springbootmockapi.repositories;
+package com.example.springbootmockapi.repository;
 
-import com.example.springbootmockapi.models.Comedian;
+import com.example.springbootmockapi.model.comedian.Comedian;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /***

@@ -1,7 +1,7 @@
-package com.example.springbootmockapi.services;
+package com.example.springbootmockapi.service;
 
-import com.example.springbootmockapi.models.Comedian;
-import com.example.springbootmockapi.repositories.ComedianRepository;
+import com.example.springbootmockapi.model.comedian.Comedian;
+import com.example.springbootmockapi.repository.ComedianRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
