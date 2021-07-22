@@ -1,11 +1,16 @@
 package com.example.springbootmockapi.controller;
 
 import com.example.springbootmockapi.model.comedian.Comedian;
+import com.example.springbootmockapi.model.comedian.ComedianRequest;
+import com.example.springbootmockapi.model.comedian.ComedianResponse;
+import com.example.springbootmockapi.model.comedian.ComediansResponse;
 import com.example.springbootmockapi.service.ComedianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 /**
@@ -25,8 +30,9 @@ public class ComedianController {
      * @return comedians
      */
     @GetMapping("/comedians")
-    public ResponseEntity<Object> getComedians() {
-        return new ResponseEntity<>(comedianService.getComedians(), HttpStatus.OK);
+    public ResponseEntity<ComediansResponse> getComedians() {
+        ComediansResponse response = new ComediansResponse("Comedians are retrieved successfully.", comedianService.getComedians());
+        return new ResponseEntity<ComediansResponse>(response, HttpStatus.OK);
     }
 
     /***
@@ -35,8 +41,9 @@ public class ComedianController {
      * @return ResponseEntity
      */
     @PostMapping("/comedians")
-    public ResponseEntity<Comedian> newComedian(@RequestBody Comedian newComedian) {
-        return new ResponseEntity<>( comedianService.createComedian(newComedian), HttpStatus.CREATED);
+    public ResponseEntity<ComedianResponse> newComedian(@Valid @RequestBody ComedianRequest newComedian) {
+        ComedianResponse response = new ComedianResponse("A new comedian is created.", comedianService.createComedian(newComedian));
+        return new ResponseEntity<ComedianResponse>( response, HttpStatus.CREATED);
     }
 
     /***
@@ -45,12 +52,14 @@ public class ComedianController {
      * @return comedian
      */
     @GetMapping("/comedians/{id}")
-    public ResponseEntity<Object> getAComedian(@PathVariable Long id) {
+    public ResponseEntity<ComedianResponse> getAComedian(@PathVariable Long id) {
         System.out.println( id);
 
         Comedian fetchedComedian = comedianService.getAComedian(id.toString());
 
-        return new ResponseEntity<>( fetchedComedian, HttpStatus.OK);
+        ComedianResponse response = new ComedianResponse("Comedian retrieved successfully!", fetchedComedian);
+
+        return new ResponseEntity<ComedianResponse>( response, HttpStatus.OK);
     }
 
     /***

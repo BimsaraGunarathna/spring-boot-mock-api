@@ -29,7 +29,9 @@ class LoadDatabase {
             log.info("Preloading " + repository.save(new Comedian("George Carlin", "stand up")));
             log.info("Preloading " + repository.save(new Comedian("Ricky Gervais", "insult")));
             log.info("Preloading " + repository.save(new Comedian("Louis C.K", "insult")));
-
+            log.info("Preloading " + repository.save(new Comedian("Robin Williams", "wholesome")));
+            log.info("Preloading " + repository.save(new Comedian("Jerry Seinfeld", "sitcom")));
+            log.info("Preloading " + repository.save(new Comedian("Kevin Hart", "stand up")));
         };
     }
 }

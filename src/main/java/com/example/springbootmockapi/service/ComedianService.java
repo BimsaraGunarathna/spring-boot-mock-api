@@ -1,6 +1,7 @@
 package com.example.springbootmockapi.service;
 
 import com.example.springbootmockapi.model.comedian.Comedian;
+import com.example.springbootmockapi.model.comedian.ComedianRequest;
 
 import java.util.Collection;
 
@@ -11,7 +12,7 @@ import java.util.Collection;
  */
 public interface ComedianService {
     Comedian getAComedian(String id);
-    Comedian createComedian(Comedian comedian);
+    Comedian createComedian(ComedianRequest comedian);
     Comedian updateComedian(String id, Comedian comedian);
     boolean deleteComedian(String id);
     Collection<Comedian> getComedians();

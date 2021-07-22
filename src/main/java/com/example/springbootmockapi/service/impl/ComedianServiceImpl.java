@@ -2,6 +2,7 @@ package com.example.springbootmockapi.service.impl;
 
 import com.example.springbootmockapi.exception.ComedianNotFoundException;
 import com.example.springbootmockapi.model.comedian.Comedian;
+import com.example.springbootmockapi.model.comedian.ComedianRequest;
 import com.example.springbootmockapi.repository.ComedianRepository;
 import com.example.springbootmockapi.service.ComedianService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,9 @@ public class ComedianServiceImpl implements ComedianService {
      * @return comedian
      */
     @Override
-    public Comedian createComedian(Comedian comedian) {
-        return repository.save(comedian);
+    public Comedian createComedian(ComedianRequest comedianRequest) {
+        Comedian newComedian = new Comedian(comedianRequest.getName(), comedianRequest.getRole());
+        return repository.save(newComedian);
     }
 
     /***
