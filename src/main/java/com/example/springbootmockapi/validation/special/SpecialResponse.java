@@ -5,6 +5,11 @@ import com.example.springbootmockapi.model.special.Special;
 import lombok.*;
 
 
+/***
+ * to handle REST requests for single special.
+ * @author Bimsara Gunarathna
+ * @since 7/22/2021
+ */
 @NoArgsConstructor
 @Getter
 @Setter

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
+ * seed sql server db with specials and comedians.
  * @author Bimsara Gunarathna
  * @since 7/18/2021
  */

@@ -5,6 +5,11 @@ import lombok.*;
 
 import java.util.Collection;
 
+/***
+ * To handle REST response for multiple comedians.
+ * @author Bimsara Gunarathna
+ * @since 7/22/2021
+ */
 @NoArgsConstructor
 @Getter
 @Setter

@@ -3,11 +3,11 @@ package com.example.springbootmockapi.validation.comedian;
 import com.example.springbootmockapi.model.comedian.Comedian;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-
+/***
+ * to handle REST requests for single comedian.
+ * @author Bimsara Gunarathna
+ * @since 7/22/2021
+ */
 @NoArgsConstructor
 @Getter
 @Setter

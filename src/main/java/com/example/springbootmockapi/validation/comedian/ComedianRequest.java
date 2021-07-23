@@ -8,6 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
+/***
+ * to handle REST requests for a single comedian.
+ * @author Bimsara Gunarathna
+ * @since 7/22/2021
+ */
 @NoArgsConstructor
 @Getter
 @Setter
