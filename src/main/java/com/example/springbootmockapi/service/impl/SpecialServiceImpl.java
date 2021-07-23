@@ -1,70 +1,70 @@
 package com.example.springbootmockapi.service.impl;
 
 import com.example.springbootmockapi.exception.ComedianNotFoundException;
-import com.example.springbootmockapi.model.comedian.Comedian;
-import com.example.springbootmockapi.validation.comedian.ComedianRequest;
-import com.example.springbootmockapi.repository.ComedianRepository;
-import com.example.springbootmockapi.service.ComedianService;
+import com.example.springbootmockapi.model.special.Special;
+import com.example.springbootmockapi.repository.SpecialRepository;
+import com.example.springbootmockapi.service.SpecialService;
+import com.example.springbootmockapi.validation.special.SpecialRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 /***
- * To process request for ComedianController
+ * To store specials to JPA
  * @author Bimsara Gunarathna
- * @since 7/19/2021
+ * @since 7/23/2021
  */
+
 @Service
-public class ComedianServiceImpl implements ComedianService {
+public class SpecialServiceImpl implements SpecialService {
 
     @Autowired
-    private ComedianRepository repository;
+    private SpecialRepository repository;
 
     /***
      * (01) To search and return single Comedian from Repository.
      * @param id
-     * @return comedian
+     * @return special
      */
     @Override
-    public Comedian getAComedian(String id) {
+    public Special getASpecial(String id) {
         Long idInLong = Long.valueOf(id);
         return repository.findById(idInLong).orElseThrow(() -> new ComedianNotFoundException(idInLong));
     }
 
     /***
      * (02) to create a new comedian
-     * @param comedianRequest
-     * @return comedian
+     * @param specialRequest
+     * @return newSpecial
      */
     @Override
-    public Comedian createComedian(ComedianRequest comedianRequest) {
-        Comedian newComedian = new Comedian(comedianRequest.getName(), comedianRequest.getRole());
-        return repository.save(newComedian);
+    public Special createSpecial(SpecialRequest specialRequest) {
+        Special newSpecial = new Special(specialRequest.getName(), specialRequest.getDescription());
+        return repository.save(newSpecial);
     }
 
     /***
      * (03) To update a comedian
      * @param id
-     * @param newComedian
-     * @return comedian
+     * @param newSpecial
+     * @return special
      */
     //(03) to change a comedian
     @Override
-    public Comedian updateComedian(String id, Comedian newComedian) {
+    public Special updateSpecial(String id, Special newSpecial) {
         Long idInLong = Long.valueOf(id);
 
         return repository.findById(idInLong)
-                .map(singleComedian -> {
-                    singleComedian.setName(newComedian.getName());
-                    singleComedian.setRole(newComedian.getRole());
-                    return repository.save(singleComedian);
+                .map(singleSpecial -> {
+                    singleSpecial.setName(newSpecial.getName());
+                    singleSpecial.setDescription(newSpecial.getDescription());
+                    return repository.save(singleSpecial);
                 })
                 .orElseGet(() -> {
-                    newComedian.setId(idInLong);
-                    return repository.save(newComedian);
+                    newSpecial.setId(idInLong);
+                    return repository.save(newSpecial);
                 });
-
     }
 
     /***
@@ -73,7 +73,7 @@ public class ComedianServiceImpl implements ComedianService {
      * @return deletedOrNot
      */
     @Override
-    public boolean deleteComedian(String id) {
+    public boolean deleteSpecial(String id) {
         Long idInLong = Long.valueOf(id);
         //handle the event comedian doesn't exits
         if (repository.existsById(idInLong)) {
@@ -86,10 +86,10 @@ public class ComedianServiceImpl implements ComedianService {
 
     /***
      * (05) to get all the comedians
-     * @return comedians
+     * @return specials
      */
     @Override
-    public Collection<Comedian> getComedians() {
+    public Collection<Special> getSpecials() {
         return repository.findAll();
     }
 }

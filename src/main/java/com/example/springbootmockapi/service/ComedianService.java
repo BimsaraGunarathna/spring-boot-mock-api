@@ -1,7 +1,7 @@
 package com.example.springbootmockapi.service;
 
 import com.example.springbootmockapi.model.comedian.Comedian;
-import com.example.springbootmockapi.model.comedian.ComedianRequest;
+import com.example.springbootmockapi.validation.comedian.ComedianRequest;
 
 import java.util.Collection;
 

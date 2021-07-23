@@ -1,10 +1,8 @@
-package com.example.springbootmockapi.model.comedian;
+package com.example.springbootmockapi.validation.special;
 
 import lombok.*;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
@@ -13,8 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @ToString
 @EqualsAndHashCode
-@Entity
-public class ComedianRequest {
+public class SpecialRequest {
     @Id
     @GeneratedValue
     private Long id;
@@ -22,12 +19,12 @@ public class ComedianRequest {
     @NotBlank(message = "Name is mandatory")
     private String name;
 
-    @NotBlank(message = "Role is mandatory")
-    private String role;
+    @NotBlank(message = "Description is mandatory")
+    private String description;
 
-    public ComedianRequest(String name, String role) {
+    public SpecialRequest(String name, String description) {
         this.name = name;
-        this.role = role;
+        this.description = description;
     }
 
 }

@@ -1,5 +1,6 @@
-package com.example.springbootmockapi.model.comedian;
+package com.example.springbootmockapi.validation.comedian;
 
+import com.example.springbootmockapi.model.comedian.Comedian;
 import lombok.*;
 
 import javax.persistence.Entity;

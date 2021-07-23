@@ -1,12 +1,11 @@
 package com.example.springbootmockapi.model.comedian;
 
+import com.example.springbootmockapi.model.special.Special;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 
 @Entity
@@ -15,15 +14,20 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @ToString
 @EqualsAndHashCode
-//@Table(name = "Comedian")
+@Table(name = "comedian")
 public class Comedian {
 
     private @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Column(name="name")
     private String name;
+    @Column(name="role")
     private String role;
+
+    @OneToMany(mappedBy = "comedian")
+    private List<Special> specials;
 
     public Comedian(String name, String role) {
         this.name = name;
