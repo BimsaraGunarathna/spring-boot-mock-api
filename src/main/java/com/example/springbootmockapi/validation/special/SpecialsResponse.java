@@ -1,6 +1,5 @@
 package com.example.springbootmockapi.validation.special;
 
-import com.example.springbootmockapi.model.comedian.Comedian;
 import com.example.springbootmockapi.model.special.Special;
 import lombok.*;
 

@@ -1,6 +1,7 @@
 package com.example.springbootmockapi.controller;
 
 import com.example.springbootmockapi.model.comedian.Comedian;
+import com.example.springbootmockapi.response.CMSResponse;
 import com.example.springbootmockapi.validation.comedian.ComedianRequest;
 import com.example.springbootmockapi.validation.comedian.ComedianResponse;
 import com.example.springbootmockapi.validation.comedian.ComediansResponse;
@@ -19,41 +20,41 @@ import javax.validation.Valid;
  * @since 21/7
  */
 @RestController
+@RequestMapping("/comedian")
 public class ComedianController {
-    //Constants
-    private static final String COMEDIANS_URL   = "/comedians";
-    private static final String COMEDIAN_URL   = "/comedian";
 
     @Autowired
     ComedianService comedianService;
 
     /***
-     * (01) to send all the comedians
+     * to send all the comedians
      * @return comedians
      */
-    @GetMapping(COMEDIANS_URL)
+    @GetMapping
     public ResponseEntity<ComediansResponse> getComedians() {
         ComediansResponse response = new ComediansResponse("Comedians are retrieved successfully.", comedianService.getComedians());
         return new ResponseEntity<ComediansResponse>(response, HttpStatus.OK);
     }
 
     /***
-     * (02) to create a new comedian
+     * to create a new comedian
      * @param newComedian
      * @return ResponseEntity
      */
-    @PostMapping(COMEDIAN_URL)
-    public ResponseEntity<ComedianResponse> newComedian(@Valid @RequestBody ComedianRequest newComedian) {
+    @PostMapping
+    public ResponseEntity<CMSResponse> newComedian(@Valid @RequestBody ComedianRequest newComedian) {
         ComedianResponse response = new ComedianResponse("A new comedian is created.", comedianService.createComedian(newComedian));
-        return new ResponseEntity<ComedianResponse>( response, HttpStatus.CREATED);
+        Comedian comedian = response.getComedian();
+        CMSResponse<Comedian> cmsResponse = new CMSResponse<>(HttpStatus.OK.value(), comedian, "Commedian Created successfully");
+        return new ResponseEntity<CMSResponse>(cmsResponse, HttpStatus.CREATED);
     }
 
     /***
-     * (03) to return a single comedian
+     * to return a single comedian
      * @param id
      * @return comedian
      */
-    @GetMapping(COMEDIAN_URL + "/{id}")
+    @GetMapping( "/{id}")
     public ResponseEntity<ComedianResponse> getAComedian(@PathVariable Long id) {
         System.out.println( id);
 
@@ -65,12 +66,12 @@ public class ComedianController {
     }
 
     /***
-     * (04) to change a comedian
+     * to change a comedian
      * @param newComedian
      * @param id
      * @return updatedComedian
      */
-    @PutMapping(COMEDIAN_URL + "/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Object> replaceComedian(@RequestBody Comedian newComedian, @PathVariable Long id) {
         Comedian updatedComedian = comedianService.updateComedian(id.toString(), newComedian);
         return new ResponseEntity<>("Comedian is updated! " + updatedComedian, HttpStatus.OK);
@@ -78,11 +79,11 @@ public class ComedianController {
     }
 
     /***
-     * (05) to delete a comedian
+     * to delete a comedian
      * @param id
      * @return ResponseEntity
      */
-    @DeleteMapping(COMEDIAN_URL + "/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteComedian(@PathVariable Long id) {
         boolean deletionStatus = comedianService.deleteComedian(id.toString());
         if (deletionStatus) {

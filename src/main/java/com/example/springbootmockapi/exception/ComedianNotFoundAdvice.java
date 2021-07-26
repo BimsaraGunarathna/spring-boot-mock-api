@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class ComedianNotFoundAdvice {
     @ResponseBody
-    @ExceptionHandler(ComedianNotFoundException.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String comedianNotFoundHandler(ComedianNotFoundException ex) {
+    String comedianNotFoundHandler(ResourceNotFoundException ex) {
         return ex.getMessage();
     }
 }

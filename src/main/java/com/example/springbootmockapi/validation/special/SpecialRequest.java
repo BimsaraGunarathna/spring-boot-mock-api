@@ -27,6 +27,9 @@ public class SpecialRequest {
     @NotBlank(message = "Description is mandatory")
     private String description;
 
+    @NotBlank(message = "Comedian id can not empty")
+    private int comedianId;
+
     public SpecialRequest(String name, String description) {
         this.name = name;
         this.description = description;

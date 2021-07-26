@@ -24,6 +24,7 @@ public class ComedianRequest {
     private Long id;
 
     @NotBlank(message = "Name is mandatory")
+    @NonNull
     private String name;
 
     @NotBlank(message = "Role is mandatory")

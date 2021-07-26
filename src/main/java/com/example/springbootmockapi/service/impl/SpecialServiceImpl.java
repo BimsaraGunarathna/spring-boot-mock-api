@@ -1,6 +1,6 @@
 package com.example.springbootmockapi.service.impl;
 
-import com.example.springbootmockapi.exception.ComedianNotFoundException;
+import com.example.springbootmockapi.exception.ResourceNotFoundException;
 import com.example.springbootmockapi.model.special.Special;
 import com.example.springbootmockapi.repository.SpecialRepository;
 import com.example.springbootmockapi.service.SpecialService;
@@ -23,14 +23,14 @@ public class SpecialServiceImpl implements SpecialService {
     private SpecialRepository repository;
 
     /***
-     * (01) To search and return single Comedian from Repository.
+     * (01) To search and return single Special from Repository.
      * @param id
      * @return special
      */
     @Override
     public Special getASpecial(String id) {
         Long idInLong = Long.valueOf(id);
-        return repository.findById(idInLong).orElseThrow(() -> new ComedianNotFoundException(idInLong));
+        return repository.findById(idInLong).orElseThrow(() -> new ResourceNotFoundException("Could not find special"));
     }
 
     /***
@@ -40,6 +40,7 @@ public class SpecialServiceImpl implements SpecialService {
      */
     @Override
     public Special createSpecial(SpecialRequest specialRequest) {
+        //Special mappedSpecial = mapper.
         Special newSpecial = new Special(specialRequest.getName(), specialRequest.getDescription());
         return repository.save(newSpecial);
     }

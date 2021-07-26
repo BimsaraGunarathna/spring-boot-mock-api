@@ -1,6 +1,6 @@
 package com.example.springbootmockapi.service.impl;
 
-import com.example.springbootmockapi.exception.ComedianNotFoundException;
+import com.example.springbootmockapi.exception.ResourceNotFoundException;
 import com.example.springbootmockapi.model.comedian.Comedian;
 import com.example.springbootmockapi.validation.comedian.ComedianRequest;
 import com.example.springbootmockapi.repository.ComedianRepository;
@@ -29,7 +29,7 @@ public class ComedianServiceImpl implements ComedianService {
     @Override
     public Comedian getAComedian(String id) {
         Long idInLong = Long.valueOf(id);
-        return repository.findById(idInLong).orElseThrow(() -> new ComedianNotFoundException(idInLong));
+        return repository.findById(idInLong).orElseThrow(() -> new ResourceNotFoundException("Could not find comedian."));
     }
 
     /***
