@@ -1,7 +1,8 @@
 package com.example.springbootmockapi.service.impl;
 
+import com.example.springbootmockapi.dto.SpecialDTO;
 import com.example.springbootmockapi.exception.ResourceNotFoundException;
-import com.example.springbootmockapi.model.special.Special;
+import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.repository.SpecialRepository;
 import com.example.springbootmockapi.service.SpecialService;
 import com.example.springbootmockapi.validation.special.SpecialRequest;
@@ -35,13 +36,13 @@ public class SpecialServiceImpl implements SpecialService {
 
     /***
      * (02) to create a new comedian
-     * @param specialRequest
+     * @param specialDTO
      * @return newSpecial
      */
     @Override
-    public Special createSpecial(SpecialRequest specialRequest) {
+    public Special createSpecial(SpecialDTO specialDTO) {
         //Special mappedSpecial = mapper.
-        Special newSpecial = new Special(specialRequest.getName(), specialRequest.getDescription());
+        Special newSpecial = new Special(specialDTO.getName(), specialDTO.getDescription(), specialDTO.getComedian());
         return repository.save(newSpecial);
     }
 

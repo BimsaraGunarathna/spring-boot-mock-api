@@ -1,7 +1,7 @@
 package com.example.springbootmockapi.service;
 
-import com.example.springbootmockapi.model.comedian.Comedian;
-import com.example.springbootmockapi.validation.comedian.ComedianRequest;
+import com.example.springbootmockapi.dto.ComedianDTO;
+import com.example.springbootmockapi.entity.comedian.Comedian;
 
 import java.util.Collection;
 
@@ -12,8 +12,8 @@ import java.util.Collection;
  */
 public interface ComedianService {
     Comedian getAComedian(String id);
-    Comedian createComedian(ComedianRequest comedian);
-    Comedian updateComedian(String id, Comedian comedian);
+    Comedian createComedian(ComedianDTO comedianDTO);
+    Comedian updateComedian(String id, ComedianDTO comedian);
     boolean deleteComedian(String id);
-    Collection<Comedian> getComedians();
+    Collection<ComedianDTO> getComedians();
 }

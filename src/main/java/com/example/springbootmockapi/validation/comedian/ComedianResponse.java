@@ -1,6 +1,6 @@
 package com.example.springbootmockapi.validation.comedian;
 
-import com.example.springbootmockapi.model.comedian.Comedian;
+import com.example.springbootmockapi.entity.comedian.Comedian;
 import lombok.*;
 
 /***

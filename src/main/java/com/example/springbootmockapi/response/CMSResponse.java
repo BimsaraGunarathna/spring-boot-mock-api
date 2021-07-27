@@ -3,6 +3,11 @@ package com.example.springbootmockapi.response;
 import lombok.*;
 
 import java.util.Date;
+/**
+ * Class for return unified response to api user
+ * @author Buddhima Nanayakkara
+ * @since 7/26/2021
+ */
 @Getter
 @Setter
 @ToString
@@ -18,4 +23,5 @@ public class CMSResponse<T> {
         this.payload = payload;
         this.message = message;
     }
+
 }

@@ -1,6 +1,6 @@
 package com.example.springbootmockapi.repository;
 
-import com.example.springbootmockapi.model.special.Special;
+import com.example.springbootmockapi.entity.special.Special;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /***

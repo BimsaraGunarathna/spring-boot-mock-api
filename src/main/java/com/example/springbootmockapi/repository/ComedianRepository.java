@@ -1,6 +1,6 @@
 package com.example.springbootmockapi.repository;
 
-import com.example.springbootmockapi.model.comedian.Comedian;
+import com.example.springbootmockapi.entity.comedian.Comedian;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /***
@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @since 7/19/2021
  */
 public interface ComedianRepository extends JpaRepository<Comedian, Long> {
+    Comedian findSingleComedianById(Long id);
 }

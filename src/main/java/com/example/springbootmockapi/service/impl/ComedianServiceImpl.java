@@ -1,8 +1,8 @@
 package com.example.springbootmockapi.service.impl;
 
-import com.example.springbootmockapi.exception.ResourceNotFoundException;
-import com.example.springbootmockapi.model.comedian.Comedian;
-import com.example.springbootmockapi.validation.comedian.ComedianRequest;
+import com.example.springbootmockapi.dto.ComedianDTO;
+import com.example.springbootmockapi.entity.comedian.Comedian;
+import com.example.springbootmockapi.mapper.MapStructMapper;
 import com.example.springbootmockapi.repository.ComedianRepository;
 import com.example.springbootmockapi.service.ComedianService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,9 @@ public class ComedianServiceImpl implements ComedianService {
     @Autowired
     private ComedianRepository repository;
 
+    @Autowired
+    private MapStructMapper mapStructMapper;
+
     /***
      * (01) To search and return single Comedian from Repository.
      * @param id
@@ -29,39 +32,42 @@ public class ComedianServiceImpl implements ComedianService {
     @Override
     public Comedian getAComedian(String id) {
         Long idInLong = Long.valueOf(id);
-        return repository.findById(idInLong).orElseThrow(() -> new ResourceNotFoundException("Could not find comedian."));
+        //return repository.findById(idInLong).orElseThrow(() -> new ResourceNotFoundException("Could not find comedian."));
+        Comedian fetchedComedian = repository.findSingleComedianById(idInLong);
+        return fetchedComedian;
     }
 
     /***
      * (02) to create a new comedian
-     * @param comedianRequest
+     * @param comedianDTO
      * @return comedian
      */
     @Override
-    public Comedian createComedian(ComedianRequest comedianRequest) {
-        Comedian newComedian = new Comedian(comedianRequest.getName(), comedianRequest.getRole());
+    public Comedian createComedian(ComedianDTO comedianDTO) {
+        Comedian newComedian = new Comedian(comedianDTO.getName(), comedianDTO.getRole());
         return repository.save(newComedian);
     }
 
     /***
      * (03) To update a comedian
      * @param id
-     * @param newComedian
+     * @param newComedianDTO
      * @return comedian
      */
     //(03) to change a comedian
     @Override
-    public Comedian updateComedian(String id, Comedian newComedian) {
+    public Comedian updateComedian(String id, ComedianDTO newComedianDTO) {
         Long idInLong = Long.valueOf(id);
 
         return repository.findById(idInLong)
                 .map(singleComedian -> {
-                    singleComedian.setName(newComedian.getName());
-                    singleComedian.setRole(newComedian.getRole());
+                    singleComedian.setName(newComedianDTO.getName());
+                    singleComedian.setRole(newComedianDTO.getRole());
                     return repository.save(singleComedian);
                 })
                 .orElseGet(() -> {
-                    newComedian.setId(idInLong);
+                    newComedianDTO.setId(idInLong);
+                    Comedian newComedian = mapStructMapper.comedianDTOToComedian(newComedianDTO);
                     return repository.save(newComedian);
                 });
 
@@ -89,7 +95,7 @@ public class ComedianServiceImpl implements ComedianService {
      * @return comedians
      */
     @Override
-    public Collection<Comedian> getComedians() {
-        return repository.findAll();
+    public Collection<ComedianDTO> getComedians() {
+        return mapStructMapper.comediansToComedianDTOs(repository.findAll());
     }
 }

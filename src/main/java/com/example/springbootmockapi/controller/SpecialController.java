@@ -1,6 +1,7 @@
 package com.example.springbootmockapi.controller;
 
-import com.example.springbootmockapi.model.special.Special;
+import com.example.springbootmockapi.dto.SpecialDTO;
+import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.service.SpecialService;
 import com.example.springbootmockapi.validation.special.SpecialRequest;
 import com.example.springbootmockapi.validation.special.SpecialResponse;
@@ -43,7 +44,7 @@ public class SpecialController {
      * @return ResponseEntity
      */
     @PostMapping(SPECIAL_URL)
-    public ResponseEntity<SpecialResponse> newSpecial(@Valid @RequestBody SpecialRequest newSpecial) {
+    public ResponseEntity<SpecialResponse> newSpecial(@Valid @RequestBody SpecialDTO newSpecial) {
         SpecialResponse response = new SpecialResponse("A new comedian is created.", specialService.createSpecial(newSpecial));
         return new ResponseEntity<SpecialResponse>( response, HttpStatus.CREATED);
     }

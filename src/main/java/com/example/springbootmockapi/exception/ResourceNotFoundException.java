@@ -14,6 +14,8 @@ public class ResourceNotFoundException extends RuntimeException {
     }
 
     public ResourceNotFoundException(String message) {
+        //CMSResponse<Collection<Comedian>> comedianCMSResponse = new CMSResponse<Collection<Comedian>>(HttpStatus.NOT_FOUND.value(), null, message);
+        //super(comedianCMSResponse);
         super(message);
     }
 

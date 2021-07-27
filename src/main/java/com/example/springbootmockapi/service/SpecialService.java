@@ -1,6 +1,7 @@
 package com.example.springbootmockapi.service;
 
-import com.example.springbootmockapi.model.special.Special;
+import com.example.springbootmockapi.dto.SpecialDTO;
+import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.validation.special.SpecialRequest;
 
 import java.util.Collection;
@@ -12,7 +13,7 @@ import java.util.Collection;
  */
 public interface SpecialService {
     Special getASpecial(String id);
-    Special createSpecial(SpecialRequest specialRequest);
+    Special createSpecial(SpecialDTO specialDTO);
     Special updateSpecial(String id, Special special);
     boolean deleteSpecial(String id);
     Collection<Special> getSpecials();

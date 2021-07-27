@@ -1,6 +1,6 @@
 package com.example.springbootmockapi.validation.special;
 
-import com.example.springbootmockapi.model.special.Special;
+import com.example.springbootmockapi.entity.special.Special;
 import lombok.*;
 
 import java.util.Collection;
