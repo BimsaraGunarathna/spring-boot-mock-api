@@ -1,10 +1,14 @@
 package com.example.springbootmockapi.service.impl;
 
+import com.example.springbootmockapi.dto.ComedianDTO;
 import com.example.springbootmockapi.dto.SpecialDTO;
+import com.example.springbootmockapi.entity.comedian.Comedian;
 import com.example.springbootmockapi.exception.ResourceNotFoundException;
 import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.mapper.MapStructMapper;
+import com.example.springbootmockapi.repository.ComedianRepository;
 import com.example.springbootmockapi.repository.SpecialRepository;
+import com.example.springbootmockapi.service.ComedianService;
 import com.example.springbootmockapi.service.SpecialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +30,9 @@ public class SpecialServiceImpl implements SpecialService {
     @Autowired
     private SpecialRepository repository;
 
+    @Autowired
+    private ComedianService comedianService;
+
     /***
      * (01) To search and return single Special from Repository.
      * @param id
@@ -45,14 +52,23 @@ public class SpecialServiceImpl implements SpecialService {
     @Override
     public Special createSpecial(SpecialDTO specialDTO) {
         //Special mappedSpecial = mapper.
-        Special newSpecial = new Special(specialDTO.getName(), specialDTO.getDescription(), specialDTO.getComedian());
+        ComedianDTO comedianDTO = comedianService.getAComedian(specialDTO.getComedianId().toString());
+        Special newSpecial = new Special(specialDTO.getName(), specialDTO.getDescription(), mapStructMapper.comedianDTOToComedian(comedianDTO));
         return repository.save(newSpecial);
+    }
+
+    public SpecialDTO findASpecial(Long id) {
+        Special specialFound = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Could not find special"));
+
+        SpecialDTO specialDTO = mapStructMapper.specialToSpecialDTO(specialFound, specialFound.getComedian());
+
+        return specialDTO;
     }
 
     /***
      * (03) To update a comedian
      * @param id
-     * @param newSpecial
+     * @param newSpecialDTO
      * @return special
      */
     //(03) to change a comedian

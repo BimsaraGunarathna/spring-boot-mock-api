@@ -46,12 +46,12 @@ public class ComedianController {
     @GetMapping( "/{id}")
     public ResponseEntity<CMSResponse> getAComedian(@PathVariable Long id) {
         System.out.println( id);
-        Comedian fetchedComedian = comedianService.getAComedian(id.toString());
-        CMSResponse<Comedian> cmsResponse;
-        if (fetchedComedian == null) {
+        ComedianDTO fetchedComedianDTO = comedianService.getAComedian(id.toString());
+        CMSResponse<ComedianDTO> cmsResponse;
+        if (fetchedComedianDTO == null) {
             cmsResponse = new CMSResponse<>(HttpStatus.NOT_FOUND.value(), null, "Comedian not found");
         } else {
-            cmsResponse = new CMSResponse<>(HttpStatus.OK.value(), fetchedComedian, "Comedian is retrieved successfully");
+            cmsResponse = new CMSResponse<>(HttpStatus.OK.value(), fetchedComedianDTO, "Comedian is retrieved successfully");
         }
 
         return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.OK);

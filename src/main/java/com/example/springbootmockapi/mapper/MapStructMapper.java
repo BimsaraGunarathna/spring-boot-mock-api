@@ -18,7 +18,10 @@ import java.util.List;
 public interface MapStructMapper {
     Comedian comedianDTOToComedian(ComedianDTO comedianDTO);
     Collection<ComedianDTO> comediansToComedianDTOs(Collection<Comedian> comedians);
+    ComedianDTO comedianToComedianDTO(Comedian comedian);
 
+    SpecialDTO specialToSpecialDTO(Special special, Comedian specialComedian);
     Special specialDTOToSpecial(SpecialDTO specialDTO);
     Collection<SpecialDTO> specialsToSpecialDTOs(Collection<Special> specials);
+
 }

@@ -30,11 +30,13 @@ public class ComedianServiceImpl implements ComedianService {
      * @return comedian
      */
     @Override
-    public Comedian getAComedian(String id) {
+    public ComedianDTO getAComedian(String id) {
+
         Long idInLong = Long.valueOf(id);
         //return repository.findById(idInLong).orElseThrow(() -> new ResourceNotFoundException("Could not find comedian."));
         Comedian fetchedComedian = repository.findSingleComedianById(idInLong);
-        return fetchedComedian;
+        ComedianDTO fetchedComedianDTO = mapStructMapper.comedianToComedianDTO(fetchedComedian);
+        return fetchedComedianDTO;
     }
 
     /***

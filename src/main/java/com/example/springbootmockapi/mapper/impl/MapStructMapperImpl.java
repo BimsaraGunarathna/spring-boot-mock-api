@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Component
 public class MapStructMapperImpl implements MapStructMapper {
+
     @Override
     public Comedian comedianDTOToComedian(ComedianDTO comedianDTO) {
 
@@ -30,6 +31,7 @@ public class MapStructMapperImpl implements MapStructMapper {
 
         comedian.setName( comedianDTO.getName());
         comedian.setRole((comedianDTO.getRole()));
+        comedian.setSpecials(comedianDTO.getSpecials());
         //comedian.setSpecials(comedianDTO.getSpecials());
         System.out.println("SPECIAL:" + comedianDTO.getSpecials());
         return comedian;
@@ -50,6 +52,37 @@ public class MapStructMapperImpl implements MapStructMapper {
             ));
         }
         return comedianDTOCollection;
+
+    }
+
+    @Override
+    public ComedianDTO comedianToComedianDTO(Comedian comedian) {
+        if(comedian == null) {
+            return null;
+        }
+        ComedianDTO comedianDTO = new ComedianDTO(
+                comedian.getName(),
+                comedian.getRole(),
+                comedian.getSpecials()
+        );
+
+        return comedianDTO;
+    }
+
+    @Override
+    public SpecialDTO specialToSpecialDTO(Special special, Comedian specialComedian) {
+        if(special == null) {
+            return null;
+        }
+
+        SpecialDTO specialDTO = new SpecialDTO();
+
+        specialDTO.setName(special.getName());
+        specialDTO.setDescription(specialDTO.getDescription());
+        specialDTO.setComedian(specialComedian);
+        specialDTO.setComedianId(specialComedian.getId());
+
+        return specialDTO;
 
     }
 

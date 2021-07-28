@@ -41,13 +41,13 @@ public class SpecialController {
 
     /***
      * (02) to create a new comedian
-     * @param newSpecial
+     * @param newSpecialDTO
      * @return ResponseEntity
      */
     @PostMapping()
-    public ResponseEntity<CMSResponse> newSpecial(@Valid @RequestBody SpecialDTO newSpecial) {
+    public ResponseEntity<CMSResponse> newSpecial(@Valid @RequestBody SpecialDTO newSpecialDTO) {
         //SpecialResponse response = new SpecialResponse("A new comedian is created.", specialService.createSpecial(newSpecial));
-        Special special = specialService.createSpecial(newSpecial);
+        Special special = specialService.createSpecial(newSpecialDTO);
         CMSResponse<Special> cmsResponse = new CMSResponse<>(HttpStatus.CREATED.value(), special, "A new comedian is created.");
 
         return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.CREATED);

@@ -43,13 +43,11 @@ public class LoadDatabase {
             )));
             log.info("Preloading " + specialRepository.save(new Special(
                     "Tamborine",
-                    "Before Tamborine, we hadn’t heard from Chris Rock in a long time. Sure, the 53-year-old comedian was one of a handful of significant names.",
-                    c1
+                    "Before Tamborine, we hadn’t heard from Chris Rock in a long time. Sure, the 53-year-old comedian was one of a handful of significant names."
             )));
             log.info("Preloading " + specialRepository.save(new Special(
                     "A Speck of Dust",
-                    "Sarah Silverman’s made a career out of shock-and-awe. She’s known for her explicit sense of humor.",
-                    c2
+                    "Sarah Silverman’s made a career out of shock-and-awe. She’s known for her explicit sense of humor."
                     )));
 
         };

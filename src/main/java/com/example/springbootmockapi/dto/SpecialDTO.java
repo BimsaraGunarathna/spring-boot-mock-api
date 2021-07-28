@@ -1,6 +1,7 @@
 package com.example.springbootmockapi.dto;
 
 import com.example.springbootmockapi.entity.comedian.Comedian;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,11 @@ public class SpecialDTO {
     @NotEmpty(message = "Name can't be empty.")
     private String description;
 
+    @JsonProperty("specialComedianId")
+    private Long comedianId;
+
+    @JsonIgnore
+    @JoinColumn(name="comedian_id")
     private Comedian comedian;
 
 

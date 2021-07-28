@@ -31,6 +31,10 @@ public class ComedianDTO {
     @NotEmpty(message = "Role can't be empty.")
     private String role;
 
+    @JsonProperty("comedianSpecialIds")
+    private List<Long> specialIds;
+
+    @JsonIgnore
     @JsonProperty("comedianSpecials")
     private Set<Special> specials;
 

@@ -34,7 +34,7 @@ public class Special {
     @JoinColumn(name="comedian_id")
     private Comedian comedian;
 
-    
+
     public Special(String name, String description) {
         this.name = name;
         this.description = description;
