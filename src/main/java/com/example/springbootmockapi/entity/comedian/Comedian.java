@@ -32,9 +32,9 @@ public class Comedian {
     private String role;
 
     @OneToMany(
-            mappedBy = "comedian",
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL
+            mappedBy = "comedian"
+            //fetch = FetchType.LAZY,
+            //cascade = CascadeType.ALL
     )
     private Set<Special> specials;
 

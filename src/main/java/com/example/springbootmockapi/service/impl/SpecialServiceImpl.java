@@ -3,9 +3,9 @@ package com.example.springbootmockapi.service.impl;
 import com.example.springbootmockapi.dto.SpecialDTO;
 import com.example.springbootmockapi.exception.ResourceNotFoundException;
 import com.example.springbootmockapi.entity.special.Special;
+import com.example.springbootmockapi.mapper.MapStructMapper;
 import com.example.springbootmockapi.repository.SpecialRepository;
 import com.example.springbootmockapi.service.SpecialService;
-import com.example.springbootmockapi.validation.special.SpecialRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +19,9 @@ import java.util.Collection;
 
 @Service
 public class SpecialServiceImpl implements SpecialService {
+
+    @Autowired
+    private MapStructMapper mapStructMapper;
 
     @Autowired
     private SpecialRepository repository;
@@ -54,17 +57,18 @@ public class SpecialServiceImpl implements SpecialService {
      */
     //(03) to change a comedian
     @Override
-    public Special updateSpecial(String id, Special newSpecial) {
+    public Special updateSpecial(String id, SpecialDTO newSpecialDTO) {
         Long idInLong = Long.valueOf(id);
 
         return repository.findById(idInLong)
                 .map(singleSpecial -> {
-                    singleSpecial.setName(newSpecial.getName());
-                    singleSpecial.setDescription(newSpecial.getDescription());
+                    singleSpecial.setName(newSpecialDTO.getName());
+                    singleSpecial.setDescription(newSpecialDTO.getDescription());
                     return repository.save(singleSpecial);
                 })
                 .orElseGet(() -> {
-                    newSpecial.setId(idInLong);
+                    newSpecialDTO.setId(idInLong);
+                    Special newSpecial = mapStructMapper.specialDTOToSpecial(newSpecialDTO);
                     return repository.save(newSpecial);
                 });
     }

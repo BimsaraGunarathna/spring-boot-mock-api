@@ -33,13 +33,13 @@ public class LoadDatabase {
             //Specials
             log.info("Preloading " + specialRepository.save(new Special(
                     "The Age of Spin",
-                    "It’s difficult to miss Dave Chappelle.",
-                    c1
+                    "It’s difficult to miss Dave Chappelle."
+
             )));
             log.info("Preloading " + specialRepository.save(new Special(
                     "Bare",
-                    "Australian comedian Jim Jefferies isn’t new to stand-up, either in the United States or elsewhere, but his name was passed around frequently after the San Bernardino shooting.",
-                    c2
+                    "Australian comedian Jim Jefferies isn’t new to stand-up, either in the United States or elsewhere, but his name was passed around frequently after the San Bernardino shooting."
+
             )));
             log.info("Preloading " + specialRepository.save(new Special(
                     "Tamborine",

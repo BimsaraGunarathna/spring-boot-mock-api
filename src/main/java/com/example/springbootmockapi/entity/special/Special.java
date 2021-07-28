@@ -26,20 +26,20 @@ public class Special {
     @Column(name="description")
     private String description;
     @ManyToOne (
-            fetch = FetchType.LAZY,
-            optional = false
+            //fetch = FetchType.LAZY,
+            //optional = false
     )
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     @JoinColumn(name="comedian_id")
     private Comedian comedian;
 
-    /*
+    
     public Special(String name, String description) {
         this.name = name;
         this.description = description;
     }
-    */
+
     public Special(String name, String description, Comedian comedian) {
         this.name = name;
         this.description = description;

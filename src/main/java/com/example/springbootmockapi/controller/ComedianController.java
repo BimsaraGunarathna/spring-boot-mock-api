@@ -3,7 +3,6 @@ package com.example.springbootmockapi.controller;
 import com.example.springbootmockapi.dto.ComedianDTO;
 import com.example.springbootmockapi.entity.comedian.Comedian;
 import com.example.springbootmockapi.response.CMSResponse;
-import com.example.springbootmockapi.validation.comedian.ComedianResponse;
 import com.example.springbootmockapi.service.ComedianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,8 +64,9 @@ public class ComedianController {
      */
     @PostMapping
     public ResponseEntity<CMSResponse> newComedian(@Valid @RequestBody ComedianDTO newComedian) {
-        ComedianResponse response = new ComedianResponse("A new comedian is created.", comedianService.createComedian(newComedian));
-        Comedian comedian = response.getComedian();
+        //ComedianResponse response = new ComedianResponse("A new comedian is created.", comedianService.createComedian(newComedian));
+        //Comedian comedian = response.getComedian();
+        Comedian comedian = comedianService.createComedian(newComedian);
         CMSResponse<Comedian> cmsResponse = new CMSResponse<>(HttpStatus.OK.value(), comedian, "Comedian is created successfully");
         System.out.println("@POST: " + newComedian.getSpecials());
         return new ResponseEntity<CMSResponse>(cmsResponse, HttpStatus.CREATED);

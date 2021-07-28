@@ -9,11 +9,16 @@ import org.mapstruct.Mapper;
 import java.util.Collection;
 import java.util.List;
 
+/***
+ * Mappers template for Comedian and Special
+ * @author Bimsara Gunarathna
+ * @since 7/27/2021
+ */
 @Mapper(componentModel = "spring")
 public interface MapStructMapper {
     Comedian comedianDTOToComedian(ComedianDTO comedianDTO);
     Collection<ComedianDTO> comediansToComedianDTOs(Collection<Comedian> comedians);
 
     Special specialDTOToSpecial(SpecialDTO specialDTO);
-    Collection<Special> specialsToSpecialDTOs(Collection<Special> specials);
+    Collection<SpecialDTO> specialsToSpecialDTOs(Collection<Special> specials);
 }

@@ -13,7 +13,7 @@ import java.util.Collection;
 public interface ComedianService {
     Comedian getAComedian(String id);
     Comedian createComedian(ComedianDTO comedianDTO);
-    Comedian updateComedian(String id, ComedianDTO comedian);
+    Comedian updateComedian(String id, ComedianDTO comedianDTO);
     boolean deleteComedian(String id);
     Collection<ComedianDTO> getComedians();
 }

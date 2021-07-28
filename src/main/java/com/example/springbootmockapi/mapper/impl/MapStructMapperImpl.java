@@ -12,6 +12,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+/***
+ * Mappers for Comedian and Special
+ * @author Bimsara Gunarathna
+ * @since 7/27/2021
+ */
 @Component
 public class MapStructMapperImpl implements MapStructMapper {
     @Override
@@ -25,7 +30,7 @@ public class MapStructMapperImpl implements MapStructMapper {
 
         comedian.setName( comedianDTO.getName());
         comedian.setRole((comedianDTO.getRole()));
-        comedian.setSpecials(comedianDTO.getSpecials());
+        //comedian.setSpecials(comedianDTO.getSpecials());
         System.out.println("SPECIAL:" + comedianDTO.getSpecials());
         return comedian;
     }
@@ -38,7 +43,11 @@ public class MapStructMapperImpl implements MapStructMapper {
 
         Collection<ComedianDTO> comedianDTOCollection = new HashSet<>();
         for(Comedian comedian : comedians ) {
-            comedianDTOCollection.add(new ComedianDTO( comedian.getName(), comedian.getRole(), comedian.getSpecials()));
+            comedianDTOCollection.add(new ComedianDTO(
+                    comedian.getName(),
+                    comedian.getRole()
+                    //comedian.getSpecials()
+            ));
         }
         return comedianDTOCollection;
 
@@ -59,8 +68,22 @@ public class MapStructMapperImpl implements MapStructMapper {
     }
 
     @Override
-    public Collection<Special> specialsToSpecialDTOs(Collection<Special> specials) {
-        return null;
+    public Collection<SpecialDTO> specialsToSpecialDTOs(Collection<Special> specials) {
+        if(specials == null) {
+            return null;
+        }
+
+        Collection<SpecialDTO> specialDTOCollection = new HashSet<>();
+
+        for(Special special : specials ) {
+            specialDTOCollection.add(
+                    new SpecialDTO(
+                    special.getName(),
+                    special.getDescription()
+                    //comedian.getSpecials()
+            ));
+        }
+        return specialDTOCollection;
     }
 
 }
