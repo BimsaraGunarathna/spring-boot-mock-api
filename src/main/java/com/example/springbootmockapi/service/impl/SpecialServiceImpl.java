@@ -2,14 +2,14 @@ package com.example.springbootmockapi.service.impl;
 
 import com.example.springbootmockapi.dto.ComedianDTO;
 import com.example.springbootmockapi.dto.SpecialDTO;
-import com.example.springbootmockapi.entity.comedian.Comedian;
 import com.example.springbootmockapi.exception.ResourceNotFoundException;
 import com.example.springbootmockapi.entity.special.Special;
-import com.example.springbootmockapi.mapper.MapStructMapper;
-import com.example.springbootmockapi.repository.ComedianRepository;
+import com.example.springbootmockapi.mapper.ComedianMapper;
+import com.example.springbootmockapi.mapper.SpecialMapper;
 import com.example.springbootmockapi.repository.SpecialRepository;
 import com.example.springbootmockapi.service.ComedianService;
 import com.example.springbootmockapi.service.SpecialService;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,11 @@ import java.util.Collection;
 public class SpecialServiceImpl implements SpecialService {
 
     @Autowired
-    private MapStructMapper mapStructMapper;
+    private SpecialMapper specialMapper;
+
+    @Autowired
+    private ComedianMapper comedianMapper;
+    //private ComedianMapper comedianMapper = Mappers.getMapper(ComedianMapper.class);
 
     @Autowired
     private SpecialRepository repository;
@@ -53,14 +57,14 @@ public class SpecialServiceImpl implements SpecialService {
     public Special createSpecial(SpecialDTO specialDTO) {
         //Special mappedSpecial = mapper.
         ComedianDTO comedianDTO = comedianService.getAComedian(specialDTO.getComedianId().toString());
-        Special newSpecial = new Special(specialDTO.getName(), specialDTO.getDescription(), mapStructMapper.comedianDTOToComedian(comedianDTO));
+        Special newSpecial = new Special(specialDTO.getName(), specialDTO.getDescription(), comedianMapper.comedianDTOToComedian(comedianDTO));
         return repository.save(newSpecial);
     }
 
     public SpecialDTO findASpecial(Long id) {
         Special specialFound = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Could not find special"));
 
-        SpecialDTO specialDTO = mapStructMapper.specialToSpecialDTO(specialFound, specialFound.getComedian());
+        SpecialDTO specialDTO = specialMapper.specialToSpecialDTO(specialFound);
 
         return specialDTO;
     }
@@ -84,7 +88,7 @@ public class SpecialServiceImpl implements SpecialService {
                 })
                 .orElseGet(() -> {
                     newSpecialDTO.setId(idInLong);
-                    Special newSpecial = mapStructMapper.specialDTOToSpecial(newSpecialDTO);
+                    Special newSpecial = specialMapper.specialDTOToSpecial(newSpecialDTO);
                     return repository.save(newSpecial);
                 });
     }

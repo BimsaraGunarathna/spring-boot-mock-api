@@ -25,14 +25,15 @@ public class Special {
     private String name;
     @Column(name="description")
     private String description;
-    @ManyToOne (
+
+    //@ManyToOne (
             //fetch = FetchType.LAZY,
             //optional = false
-    )
+    //)
     //@OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    @JoinColumn(name="comedian_id")
-    private Comedian comedian;
+    //@JsonIgnore
+    //@JoinColumn(name="comedian_id")
+    //private Comedian comedian;
 
 
     public Special(String name, String description) {
@@ -43,8 +44,6 @@ public class Special {
     public Special(String name, String description, Comedian comedian) {
         this.name = name;
         this.description = description;
-        this.comedian = comedian;
     }
-
 
 }

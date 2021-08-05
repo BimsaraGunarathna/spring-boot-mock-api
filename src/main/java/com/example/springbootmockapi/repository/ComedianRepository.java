@@ -9,5 +9,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @since 7/19/2021
  */
 public interface ComedianRepository extends JpaRepository<Comedian, Long> {
-    Comedian findSingleComedianById(Long id);
 }

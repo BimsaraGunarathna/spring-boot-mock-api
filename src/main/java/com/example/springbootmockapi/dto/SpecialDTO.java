@@ -31,9 +31,9 @@ public class SpecialDTO {
     @JsonProperty("specialComedianId")
     private Long comedianId;
 
-    @JsonIgnore
-    @JoinColumn(name="comedian_id")
-    private Comedian comedian;
+    //@JsonIgnore
+    //@JoinColumn(name="comedian_id")
+    //private Comedian comedian;
 
 
     public SpecialDTO(String name, String description) {

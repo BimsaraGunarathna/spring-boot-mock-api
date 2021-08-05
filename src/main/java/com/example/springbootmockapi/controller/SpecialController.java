@@ -35,7 +35,7 @@ public class SpecialController {
     public ResponseEntity<CMSResponse> getSpecials() {
         //SpecialsResponse response = new SpecialsResponse("Specials are retrieved successfully.", specialService.getSpecials());
         Collection<Special> specials = specialService.getSpecials();
-        CMSResponse response = new CMSResponse(HttpStatus.CREATED.value(), specials,"Specials are retrieved successfully.");
+        CMSResponse response = new CMSResponse(HttpStatus.CREATED, specials,"Specials are retrieved successfully.");
         return new ResponseEntity<CMSResponse>(response, HttpStatus.OK);
     }
 
@@ -48,7 +48,7 @@ public class SpecialController {
     public ResponseEntity<CMSResponse> newSpecial(@Valid @RequestBody SpecialDTO newSpecialDTO) {
         //SpecialResponse response = new SpecialResponse("A new comedian is created.", specialService.createSpecial(newSpecial));
         Special special = specialService.createSpecial(newSpecialDTO);
-        CMSResponse<Special> cmsResponse = new CMSResponse<>(HttpStatus.CREATED.value(), special, "A new comedian is created.");
+        CMSResponse<Special> cmsResponse = new CMSResponse<>(HttpStatus.CREATED, special, "A new comedian is created.");
 
         return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.CREATED);
     }
@@ -64,7 +64,7 @@ public class SpecialController {
 
         Special fetchedSpecial = specialService.getASpecial(id.toString());
 
-        CMSResponse<Special> cmsResponse = new CMSResponse<Special>(HttpStatus.CREATED.value(), fetchedSpecial,"Comedian retrieved successfully!");
+        CMSResponse<Special> cmsResponse = new CMSResponse<Special>(HttpStatus.CREATED, fetchedSpecial,"Comedian retrieved successfully!");
 
         return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.OK);
     }

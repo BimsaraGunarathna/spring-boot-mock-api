@@ -2,6 +2,7 @@ package com.example.springbootmockapi.controller;
 
 import com.example.springbootmockapi.dto.ComedianDTO;
 import com.example.springbootmockapi.entity.comedian.Comedian;
+import com.example.springbootmockapi.exception.ComedianNotFoundException;
 import com.example.springbootmockapi.response.CMSResponse;
 import com.example.springbootmockapi.service.ComedianService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class ComedianController {
     @GetMapping
     public ResponseEntity<CMSResponse> getComedians() {
         Collection<ComedianDTO> retrievedComedians = comedianService.getComedians();
-        CMSResponse<Collection<ComedianDTO>> cmsResponse = new CMSResponse<>(HttpStatus.OK.value(), retrievedComedians, "Comedians are retrieved successfully");
+        CMSResponse<Collection<ComedianDTO>> cmsResponse = new CMSResponse<>(HttpStatus.OK, retrievedComedians, "Comedians are retrieved successfully");
         return new ResponseEntity<CMSResponse>(cmsResponse, HttpStatus.OK);
     }
 
@@ -49,9 +50,10 @@ public class ComedianController {
         ComedianDTO fetchedComedianDTO = comedianService.getAComedian(id.toString());
         CMSResponse<ComedianDTO> cmsResponse;
         if (fetchedComedianDTO == null) {
-            cmsResponse = new CMSResponse<>(HttpStatus.NOT_FOUND.value(), null, "Comedian not found");
+            //throw new ComedianNotFoundException()
+            cmsResponse = new CMSResponse<>(HttpStatus.NOT_FOUND, null, "Comedian not found");
         } else {
-            cmsResponse = new CMSResponse<>(HttpStatus.OK.value(), fetchedComedianDTO, "Comedian is retrieved successfully");
+            cmsResponse = new CMSResponse<>(HttpStatus.OK, fetchedComedianDTO, "Comedian is retrieved successfully");
         }
 
         return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.OK);
@@ -67,8 +69,8 @@ public class ComedianController {
         //ComedianResponse response = new ComedianResponse("A new comedian is created.", comedianService.createComedian(newComedian));
         //Comedian comedian = response.getComedian();
         Comedian comedian = comedianService.createComedian(newComedian);
-        CMSResponse<Comedian> cmsResponse = new CMSResponse<>(HttpStatus.OK.value(), comedian, "Comedian is created successfully");
-        System.out.println("@POST: " + newComedian.getSpecials());
+        CMSResponse<Comedian> cmsResponse = new CMSResponse<>(HttpStatus.OK, comedian, "Comedian is created successfully");
+        System.out.println("@POST: " + newComedian.getName());
         return new ResponseEntity<CMSResponse>(cmsResponse, HttpStatus.CREATED);
     }
 
@@ -82,7 +84,6 @@ public class ComedianController {
     public ResponseEntity<Object> replaceComedian(@RequestBody ComedianDTO newComedian, @PathVariable Long id) {
         Comedian updatedComedian = comedianService.updateComedian(id.toString(), newComedian);
         return new ResponseEntity<>("Comedian is updated! " + updatedComedian, HttpStatus.OK);
-
     }
 
     /***

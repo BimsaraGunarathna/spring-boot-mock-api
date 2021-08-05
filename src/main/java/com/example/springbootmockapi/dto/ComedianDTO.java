@@ -34,20 +34,14 @@ public class ComedianDTO {
     @JsonProperty("comedianSpecialIds")
     private List<Long> specialIds;
 
-    @JsonIgnore
-    @JsonProperty("comedianSpecials")
-    private Set<Special> specials;
+    //@JsonIgnore
+    //@JsonProperty("comedianSpecials")
+    //private Set<Special> specials;
 
-
-    public ComedianDTO(String name, String role, Set<Special> specials) {
-        this.name = name;
-        this.role = role;
-        this.specials = specials;
-    }
 
     public ComedianDTO(String name, String role) {
         this.name = name;
         this.role = role;
-
     }
+
 }

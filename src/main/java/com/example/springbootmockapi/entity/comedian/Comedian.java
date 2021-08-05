@@ -21,7 +21,7 @@ import java.util.Set;
 @Table(name = "comedian")
 public class Comedian {
     @JsonIgnore
-    private @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
@@ -31,12 +31,12 @@ public class Comedian {
     @Column(name="role")
     private String role;
 
-    @OneToMany(
-            mappedBy = "comedian"
+    //@OneToMany(
+    //        mappedBy = "comedian"
             //fetch = FetchType.LAZY,
             //cascade = CascadeType.ALL
-    )
-    private Set<Special> specials;
+    //)
+    //private Set<Special> specials;
 
     private long createdAt = new Date().getTime();
 
