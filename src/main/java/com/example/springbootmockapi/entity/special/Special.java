@@ -2,11 +2,13 @@ package com.example.springbootmockapi.entity.special;
 
 import com.example.springbootmockapi.entity.comedian.Comedian;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -26,24 +28,18 @@ public class Special {
     @Column(name="description")
     private String description;
 
-    //@ManyToOne (
-            //fetch = FetchType.LAZY,
-            //optional = false
-    //)
-    //@OnDelete(action = OnDeleteAction.CASCADE)
-    //@JsonIgnore
-    //@JoinColumn(name="comedian_id")
-    //private Comedian comedian;
-
+    @Column(name="comedianId")
+    private Long comedianId;
 
     public Special(String name, String description) {
         this.name = name;
         this.description = description;
     }
 
-    public Special(String name, String description, Comedian comedian) {
+    public Special(String name, String description, Long comedianId) {
         this.name = name;
         this.description = description;
+        this.comedianId = comedianId;
     }
 
 }

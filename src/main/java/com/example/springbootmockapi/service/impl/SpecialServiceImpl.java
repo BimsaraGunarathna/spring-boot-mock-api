@@ -57,7 +57,7 @@ public class SpecialServiceImpl implements SpecialService {
     public Special createSpecial(SpecialDTO specialDTO) {
         //Special mappedSpecial = mapper.
         ComedianDTO comedianDTO = comedianService.getAComedian(specialDTO.getComedianId().toString());
-        Special newSpecial = new Special(specialDTO.getName(), specialDTO.getDescription(), comedianMapper.comedianDTOToComedian(comedianDTO));
+        Special newSpecial = new Special(specialDTO.getName(), specialDTO.getDescription());
         return repository.save(newSpecial);
     }
 

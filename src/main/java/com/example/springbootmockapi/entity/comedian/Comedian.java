@@ -31,20 +31,11 @@ public class Comedian {
     @Column(name="role")
     private String role;
 
-    //@OneToMany(
-    //        mappedBy = "comedian"
-            //fetch = FetchType.LAZY,
-            //cascade = CascadeType.ALL
-    //)
-    //private Set<Special> specials;
 
-    private long createdAt = new Date().getTime();
-
-    private String createdBy;
-
-    private long modifiedAt = new Date().getTime();
-
-    private String modifiedBy;
+//    private long createdAt = new Date().getTime();
+//    private String createdBy;
+//    private long modifiedAt = new Date().getTime();
+//    private String modifiedBy;
 
     public Comedian(String name, String role) {
         this.name = name;

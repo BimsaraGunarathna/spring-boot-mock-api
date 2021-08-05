@@ -10,6 +10,11 @@ import java.util.HashSet;
 
 @Component
 public class ComedianMapperImpl implements ComedianMapper {
+    /**
+     * To map single comedianDTO to comedian
+     * @param comedianDTO
+     * @return comedian
+     */
     @Override
     public Comedian comedianDTOToComedian(ComedianDTO comedianDTO) {
 
@@ -27,24 +32,34 @@ public class ComedianMapperImpl implements ComedianMapper {
         return comedian;
     }
 
+    /**
+     * To map multiple comedians to comedianDTOs
+     * @param comedians
+     * @return comedianDTOs
+     */
     @Override
     public Collection<ComedianDTO> comediansToComedianDTOs(Collection<Comedian> comedians) {
         if( comedians == null) {
             return null;
         }
 
-        Collection<ComedianDTO> comedianDTOCollection = new HashSet<>();
+        Collection<ComedianDTO> comedianDTOs = new HashSet<>();
         for(Comedian comedian : comedians ) {
-            comedianDTOCollection.add(new ComedianDTO(
+            comedianDTOs.add(new ComedianDTO(
                     comedian.getName(),
                     comedian.getRole()
                     //comedian.getSpecials()
             ));
         }
-        return comedianDTOCollection;
+        return comedianDTOs;
 
     }
 
+    /**
+     * to map single comedian to comedianDTO
+     * @param comedian
+     * @return comedianDTO
+     */
     @Override
     public ComedianDTO comedianToComedianDTO(Comedian comedian) {
         if(comedian == null) {

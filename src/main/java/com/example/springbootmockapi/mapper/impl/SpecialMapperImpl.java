@@ -11,6 +11,11 @@ import java.util.HashSet;
 @Component
 public class SpecialMapperImpl implements SpecialMapper {
 
+    /**
+     * to map special to a specialDTO
+     * @param special
+     * @return specialDTO
+     */
     @Override
     public SpecialDTO specialToSpecialDTO(Special special) {
         if(special == null) {
@@ -21,12 +26,17 @@ public class SpecialMapperImpl implements SpecialMapper {
 
         specialDTO.setName(special.getName());
         specialDTO.setDescription(specialDTO.getDescription());
-        ///specialDTO.setComedian(specialComedian);
+        specialDTO.setComedianId(specialDTO.getComedianId());
 
         return specialDTO;
 
     }
 
+    /**
+     * to map specialDTO to special
+     * @param specialDTO
+     * @return special
+     */
     @Override
     public Special specialDTOToSpecial(SpecialDTO specialDTO) {
         if(specialDTO == null) {
@@ -37,26 +47,31 @@ public class SpecialMapperImpl implements SpecialMapper {
 
         special.setName(specialDTO.getName());
         special.setDescription(specialDTO.getDescription());
+
         return special;
-        //special.setComedian(specialDTO.getComedianId());
     }
 
+    /**
+     * to map multiple specials to specialDTOs
+     * @param specials
+     * @return specialDTOs
+     */
     @Override
     public Collection<SpecialDTO> specialsToSpecialDTOs(Collection<Special> specials) {
         if(specials == null) {
             return null;
         }
 
-        Collection<SpecialDTO> specialDTOCollection = new HashSet<>();
+        Collection<SpecialDTO> specialDTOs = new HashSet<>();
 
         for(Special special : specials ) {
-            specialDTOCollection.add(
+            specialDTOs.add(
                     new SpecialDTO(
                             special.getName(),
-                            special.getDescription()
-                            //comedian.getSpecials()
+                            special.getDescription(),
+                            special.getComedianId()
                     ));
         }
-        return specialDTOCollection;
+        return specialDTOs;
     }
 }
