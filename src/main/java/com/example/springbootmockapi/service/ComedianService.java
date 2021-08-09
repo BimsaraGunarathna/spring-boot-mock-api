@@ -14,7 +14,7 @@ import java.util.Collection;
 public interface ComedianService {
     ComedianDTO getAComedian(String id);
     ComedianDTO createComedian(CreateComedianDTO comedianDTO);
-    ComedianDTO updateComedian(String id, ComedianDTO comedianDTO);
+    ComedianDTO updateComedian(String id, CreateComedianDTO comedianDTO);
     boolean deleteComedian(String id);
     Collection<ComedianDTO> getComedians();
 }

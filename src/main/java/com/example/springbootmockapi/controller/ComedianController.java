@@ -50,7 +50,6 @@ public class ComedianController {
         ComedianDTO fetchedComedianDTO = comedianService.getAComedian(id);
         CMSResponse<ComedianDTO> cmsResponse;
         if (fetchedComedianDTO == null) {
-            //throw new ComedianNotFoundException()
             cmsResponse = new CMSResponse<>(HttpStatus.NOT_FOUND, null, "Comedian not found");
         } else {
             cmsResponse = new CMSResponse<>(HttpStatus.OK, fetchedComedianDTO, "Comedian is retrieved successfully");
@@ -74,14 +73,20 @@ public class ComedianController {
 
     /***
      * to change a comedian
-     * @param newComedian
+     * @param newCreateComedian
      * @param id
      * @return updatedComedian
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Object> replaceComedian(@RequestBody ComedianDTO newComedian, @PathVariable String id) {
-        ComedianDTO updatedComedian = comedianService.updateComedian(id, newComedian);
-        return new ResponseEntity<>("Comedian is updated! " + updatedComedian, HttpStatus.OK);
+    public ResponseEntity<CMSResponse> replaceComedian(@RequestBody CreateComedianDTO newCreateComedian, @PathVariable String id) {
+        ComedianDTO updatedComedian = comedianService.updateComedian(id, newCreateComedian);
+        CMSResponse<ComedianDTO> _cmsResponse;
+        if (updatedComedian == null) {
+            _cmsResponse = new CMSResponse<>(HttpStatus.NOT_FOUND, null, "Comedian can't found to be updated.");
+        } else {
+            _cmsResponse = new CMSResponse<>(HttpStatus.OK, updatedComedian, "Comedian is updated successfully");
+        }
+        return new ResponseEntity<CMSResponse>( _cmsResponse, HttpStatus.OK);
     }
 
     /***

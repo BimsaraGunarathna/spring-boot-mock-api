@@ -1,5 +1,6 @@
 package com.example.springbootmockapi.controller;
 
+import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.dto.special.SpecialDTO;
 import com.example.springbootmockapi.entity.special.Special;
@@ -29,61 +30,67 @@ public class SpecialController {
     SpecialService specialService;
 
     /***
-     * (01) to send all the comedians
+     * to send all the comedians
      * @return specialsResponse
      */
     @GetMapping()
     public ResponseEntity<CMSResponse> getSpecials() {
-        //SpecialsResponse response = new SpecialsResponse("Specials are retrieved successfully.", specialService.getSpecials());
         Collection<Special> specials = specialService.getSpecials();
         CMSResponse response = new CMSResponse(HttpStatus.CREATED, specials,"Specials are retrieved successfully.");
         return new ResponseEntity<CMSResponse>(response, HttpStatus.OK);
     }
 
     /***
-     * (02) to create a new comedian
+     * to create a new comedian
      * @param createSpecialDTO
      * @return ResponseEntity
      */
     @PostMapping()
     public ResponseEntity<CMSResponse> newSpecial(@Valid @RequestBody CreateSpecialDTO createSpecialDTO) {
-        Special special = specialService.createSpecial(createSpecialDTO);
-        CMSResponse<Special> cmsResponse = new CMSResponse<>(HttpStatus.CREATED, special, "A new comedian is created.");
+        SpecialDTO special = specialService.createSpecial(createSpecialDTO);
+        CMSResponse<SpecialDTO> cmsResponse = new CMSResponse<>(HttpStatus.CREATED, special, "A new comedian is created.");
 
         return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.CREATED);
     }
 
     /***
-     * (03) to return a single comedian
+     * to return a single comedian
      * @param id
      * @return special
      */
     @GetMapping("/{id}")
     public ResponseEntity<CMSResponse> getASpecial (@PathVariable String id) {
-        System.out.println( id);
-
         SpecialDTO fetchedSpecialDTO = specialService.getASpecial(id);
-
-        CMSResponse<SpecialDTO> cmsResponse = new CMSResponse<SpecialDTO>(HttpStatus.CREATED, fetchedSpecialDTO,"Comedian retrieved successfully!");
-
+        CMSResponse<SpecialDTO> cmsResponse;
+        if (fetchedSpecialDTO == null) {
+            cmsResponse = new CMSResponse<>(HttpStatus.NOT_FOUND, null, "Special not found");
+        } else {
+            cmsResponse = new CMSResponse<>(HttpStatus.OK, fetchedSpecialDTO, "Special is retrieved successfully");
+        }
         return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.OK);
     }
 
     /***
-     * (04) to change a comedian
-     * @param newSpecialDTO
+     * to change a comedian
+     * @param newCreateSpecialDTO
      * @param id
      * @return updatedSpecial
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Object> replaceSpecial(@RequestBody SpecialDTO newSpecialDTO, @PathVariable String id) {
-        Special updatedSpecial = specialService.updateSpecial(id, newSpecialDTO);
-        return new ResponseEntity<>("Special is updated! " + updatedSpecial, HttpStatus.OK);
+    public ResponseEntity<CMSResponse> replaceSpecial(@RequestBody CreateSpecialDTO newCreateSpecialDTO, @PathVariable String id) {
+        SpecialDTO updatedSpecialDTO = specialService.updateSpecial(id, newCreateSpecialDTO);
 
+        CMSResponse<SpecialDTO> cmsResponse;
+        if (updatedSpecialDTO == null) {
+            cmsResponse = new CMSResponse<>(HttpStatus.NOT_FOUND, null, "Special not found");
+        } else {
+            cmsResponse = new CMSResponse<>(HttpStatus.OK, updatedSpecialDTO, "Special is updated successfully");
+        }
+        return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.OK);
     }
 
     /***
-     * (05) to delete a comedian
+     * to delete a comedian
      * @param id
      * @return ResponseEntity
      */
@@ -95,5 +102,4 @@ public class SpecialController {
         }
         return new ResponseEntity<>("Special doesn't exits!", HttpStatus.NOT_FOUND);
     }
-
 }

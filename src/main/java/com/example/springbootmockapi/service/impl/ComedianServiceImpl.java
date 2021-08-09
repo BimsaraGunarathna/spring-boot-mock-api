@@ -35,11 +35,12 @@ public class ComedianServiceImpl implements ComedianService {
      */
     @Override
     public ComedianDTO getAComedian(String id) {
-        Optional<Comedian> optionalComedian =  comedianRepository.findById(id);
-
-
-        ComedianDTO fetchedComedianDTO = comedianMapper.comedianToComedianDTO(optionalComedian.get());
-        return fetchedComedianDTO;
+        if (comedianRepository.existsById(id)) {
+            Optional<Comedian> optionalComedian =  comedianRepository.findById(id);
+            ComedianDTO fetchedComedianDTO = comedianMapper.comedianToComedianDTO(optionalComedian.get());
+            return fetchedComedianDTO;
+        }
+        return null;
     }
 
     /***
@@ -57,26 +58,29 @@ public class ComedianServiceImpl implements ComedianService {
     /***
      * to update a comedian
      * @param id
-     * @param newComedianDTO
+     * @param newCreateComedianDTO
      * @return comedian
      */
     //(03) to change a comedian
     @Override
-    public ComedianDTO updateComedian(String id, ComedianDTO newComedianDTO) {
+    public ComedianDTO updateComedian(String id, CreateComedianDTO newCreateComedianDTO) {
 
-
-        comedianRepository.findById(id)
-                .map(singleComedian -> {
-                    singleComedian.setName(newComedianDTO.getName());
-                    singleComedian.setRole(newComedianDTO.getRole());
-                    return comedianRepository.save(singleComedian);
-                })
-                .orElseGet(() -> {
-                    newComedianDTO.setId(id);
-                    Comedian newComedian = comedianMapper.comedianDTOToComedian(newComedianDTO);
-                    return comedianRepository.save(newComedian);
-                });
-        return newComedianDTO;
+        ComedianDTO newComedianDTO = comedianMapper.createComedianDTOToComedianDTO(newCreateComedianDTO);
+        if(comedianRepository.existsById(id)) {
+            comedianRepository.findById(id)
+                    .map(singleComedian -> {
+                        singleComedian.setName(newComedianDTO.getName());
+                        singleComedian.setRole(newComedianDTO.getRole());
+                        return comedianRepository.save(singleComedian);
+                    })
+                    .orElseGet(() -> {
+                        newComedianDTO.setId(id);
+                        Comedian newComedian = comedianMapper.comedianDTOToComedian(newComedianDTO);
+                        return comedianRepository.save(newComedian);
+                    });
+            return newComedianDTO;
+        }
+        return null;
     }
 
     /***

@@ -45,11 +45,12 @@ public class SpecialServiceImpl implements SpecialService {
      */
     @Override
     public SpecialDTO getASpecial(String id) {
-        //Long idInLong = Long.valueOf(id);
-        Optional<Special> optionalSpecial =  repository.findById(id);
-
-        SpecialDTO fetchedSpecialDTO = specialMapper.specialToSpecialDTO(optionalSpecial.get());
-        return fetchedSpecialDTO;
+        if(repository.existsById(id)) {
+            Optional<Special> optionalSpecial =  repository.findById(id);
+            SpecialDTO fetchedSpecialDTO = specialMapper.specialToSpecialDTO(optionalSpecial.get());
+            return fetchedSpecialDTO;
+        }
+        return null;
     }
 
     /***
@@ -58,41 +59,39 @@ public class SpecialServiceImpl implements SpecialService {
      * @return newSpecial
      */
     @Override
-    public Special createSpecial(CreateSpecialDTO createSpecialDTO) {
+    public SpecialDTO createSpecial(CreateSpecialDTO createSpecialDTO) {
         SpecialDTO specialDTO = specialMapper.createSpecialDTOToSpecialDTO(createSpecialDTO);
         Special newSpecial = specialMapper.specialDTOToSpecial(specialDTO);
-        return repository.save(newSpecial);
-    }
-
-    public SpecialDTO findASpecial(String id) {
-        Special specialFound = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Could not find special"));
-
-        SpecialDTO specialDTO = specialMapper.specialToSpecialDTO(specialFound);
-
+        repository.save(newSpecial);
         return specialDTO;
     }
 
     /***
      * (03) To update a comedian
      * @param id
-     * @param newSpecialDTO
+     * @param newCreateSpecialDTO
      * @return special
      */
     //(03) to change a comedian
     @Override
-    public Special updateSpecial(String id, SpecialDTO newSpecialDTO) {
+    public SpecialDTO updateSpecial(String id, CreateSpecialDTO newCreateSpecialDTO) {
+        SpecialDTO newSpecialDTO = specialMapper.createSpecialDTOToSpecialDTO(newCreateSpecialDTO);
+        if (repository.existsById(id)) {
+            repository.findById(id)
+                    .map(singleSpecial -> {
+                        singleSpecial.setName(newSpecialDTO.getName());
+                        singleSpecial.setDescription(newSpecialDTO.getDescription());
+                        return repository.save(singleSpecial);
+                    })
+                    .orElseGet(() -> {
+                        newSpecialDTO.setId(id);
+                        Special newSpecial = specialMapper.specialDTOToSpecial(newSpecialDTO);
+                        return repository.save(newSpecial);
+                    });
+            return newSpecialDTO;
+        }
+        return null;
 
-        return repository.findById(id)
-                .map(singleSpecial -> {
-                    singleSpecial.setName(newSpecialDTO.getName());
-                    singleSpecial.setDescription(newSpecialDTO.getDescription());
-                    return repository.save(singleSpecial);
-                })
-                .orElseGet(() -> {
-                    newSpecialDTO.setId(id);
-                    Special newSpecial = specialMapper.specialDTOToSpecial(newSpecialDTO);
-                    return repository.save(newSpecial);
-                });
     }
 
     /***

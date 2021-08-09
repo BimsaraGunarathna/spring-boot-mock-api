@@ -13,8 +13,8 @@ import java.util.Collection;
  */
 public interface SpecialService {
     SpecialDTO getASpecial(String id);
-    Special createSpecial(CreateSpecialDTO specialDTO);
-    Special updateSpecial(String id, SpecialDTO specialDTO);
+    SpecialDTO createSpecial(CreateSpecialDTO specialDTO);
+    SpecialDTO updateSpecial(String id, CreateSpecialDTO specialDTO);
     boolean deleteSpecial(String id);
     Collection<Special> getSpecials();
 }
