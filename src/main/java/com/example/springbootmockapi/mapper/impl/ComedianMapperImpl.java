@@ -1,16 +1,15 @@
 package com.example.springbootmockapi.mapper.impl;
-
 import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.comedian.CreateComedianDTO;
 import com.example.springbootmockapi.entity.comedian.Comedian;
 import com.example.springbootmockapi.mapper.ComedianMapper;
 import org.springframework.stereotype.Component;
-
 import java.util.Collection;
 import java.util.HashSet;
 
 @Component
 public class ComedianMapperImpl implements ComedianMapper {
+
     /**
      * To map single comedianDTO to comedian
      * @param comedianDTO - A ComedianDTO
@@ -27,7 +26,6 @@ public class ComedianMapperImpl implements ComedianMapper {
 
         comedian.setName( comedianDTO.getName());
         comedian.setRole((comedianDTO.getRole()));
-
 
         return comedian;
     }
@@ -49,11 +47,9 @@ public class ComedianMapperImpl implements ComedianMapper {
                     comedian.getId(),
                     comedian.getName(),
                     comedian.getRole()
-
             ));
         }
         return comedianDTOs;
-
     }
 
     /**
@@ -70,9 +66,7 @@ public class ComedianMapperImpl implements ComedianMapper {
                 comedian.getId(),
                 comedian.getName(),
                 comedian.getRole()
-
         );
-
         return comedianDTO;
     }
 

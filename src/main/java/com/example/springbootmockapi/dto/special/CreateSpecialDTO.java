@@ -22,5 +22,8 @@ public class CreateSpecialDTO {
         @NotEmpty(message = "Description can't be empty.")
         private String description;
 
+        @JsonProperty("comedianId")
+        private String comedianId;
+
 
 }

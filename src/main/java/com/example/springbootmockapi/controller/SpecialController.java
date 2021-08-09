@@ -1,5 +1,6 @@
 package com.example.springbootmockapi.controller;
 
+import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.dto.special.SpecialDTO;
 import com.example.springbootmockapi.entity.special.Special;
@@ -34,7 +35,7 @@ public class SpecialController {
      */
     @GetMapping()
     public ResponseEntity<CMSResponse> getSpecials() {
-        Collection<Special> specials = specialService.getSpecials();
+        Collection<SpecialDTO> specials = specialService.getSpecials();
         CMSResponse response = new CMSResponse(HttpStatus.CREATED, specials,"Specials are retrieved successfully.");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -101,4 +102,5 @@ public class SpecialController {
         }
         return new ResponseEntity<>("Special doesn't exits!", HttpStatus.NOT_FOUND);
     }
+
 }

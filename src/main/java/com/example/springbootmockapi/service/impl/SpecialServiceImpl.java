@@ -1,11 +1,16 @@
 package com.example.springbootmockapi.service.impl;
 
+import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.dto.special.SpecialDTO;
 import com.example.springbootmockapi.entity.special.Special;
+import com.example.springbootmockapi.mapper.ComedianMapper;
 import com.example.springbootmockapi.mapper.SpecialMapper;
+import com.example.springbootmockapi.repository.ComedianRepository;
 import com.example.springbootmockapi.repository.SpecialRepository;
+import com.example.springbootmockapi.service.ComedianService;
 import com.example.springbootmockapi.service.SpecialService;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +28,19 @@ public class SpecialServiceImpl implements SpecialService {
     @Autowired
     private SpecialMapper specialMapper;
 
-    //private ComedianMapper comedianMapper = Mappers.getMapper(ComedianMapper.class);
+    //private SpecialMapper specialMapper = Mappers.getMapper(SpecialMapper.class);
+
 
     @Autowired
     private SpecialRepository repository;
 
 
+    @Autowired
+    private ComedianService comedianService;
+
+
     /***
-     * (01) To search and return single Special from Repository.
+     * to search and return single Special from Repository.
      * @param id - id of the Special to be retrieved.
      * @return special
      */
@@ -45,7 +55,7 @@ public class SpecialServiceImpl implements SpecialService {
     }
 
     /***
-     * (02) to create a new comedian
+     * to create a new comedian
      * @param createSpecialDTO - A CreateSpecialDTO object
      * @return newSpecial
      */
@@ -58,7 +68,7 @@ public class SpecialServiceImpl implements SpecialService {
     }
 
     /***
-     * (03) To update a comedian
+     * To update a comedian
      * @param id - id of the Comedian to be updated.
      * @param newCreateSpecialDTO
      * @return special
@@ -86,7 +96,7 @@ public class SpecialServiceImpl implements SpecialService {
     }
 
     /***
-     * (04) to delete comedian
+     * to delete comedian
      * @param id - id of the Comedian to be deleted.
      * @return deletedOrNot
      */
@@ -102,11 +112,13 @@ public class SpecialServiceImpl implements SpecialService {
     }
 
     /***
-     * (05) to get all the comedians
+     * to get all the comedians
      * @return specials
      */
     @Override
-    public Collection<Special> getSpecials() {
-        return repository.findAll();
+    public Collection<SpecialDTO> getSpecials() {
+        Collection<Special> specials = repository.findAll();
+        Collection<SpecialDTO> specialDTOs = specialMapper.specialsToSpecialDTOs(specials);
+        return specialDTOs;
     }
 }

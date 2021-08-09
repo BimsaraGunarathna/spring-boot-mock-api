@@ -25,10 +25,11 @@ public class SpecialDTO {
     @JsonProperty("comedianId")
     private String comedianId;
 
-    public SpecialDTO(String name, String description) {
+    public SpecialDTO(String name, String description, String comedianId) {
 
         this.name = name;
         this.description = description;
+        this.comedianId = comedianId;
     }
 
 }

@@ -49,6 +49,7 @@ public class SpecialMapperImpl implements SpecialMapper {
 
         special.setName(specialDTO.getName());
         special.setDescription(specialDTO.getDescription());
+        special.setComedianId(specialDTO.getComedianId());
 
         return special;
     }
@@ -91,7 +92,8 @@ public class SpecialMapperImpl implements SpecialMapper {
 
         return new SpecialDTO(
                 createSpecialDTO.getName(),
-                createSpecialDTO.getDescription()
+                createSpecialDTO.getDescription(),
+                createSpecialDTO.getComedianId()
         );
     }
 }
