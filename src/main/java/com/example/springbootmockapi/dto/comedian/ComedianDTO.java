@@ -1,15 +1,10 @@
 package com.example.springbootmockapi.dto.comedian;
 
-import com.example.springbootmockapi.entity.special.Special;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @Setter

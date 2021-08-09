@@ -2,9 +2,7 @@ package com.example.springbootmockapi.mapper.impl;
 
 import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.comedian.CreateComedianDTO;
-import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.entity.comedian.Comedian;
-import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.mapper.ComedianMapper;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +13,7 @@ import java.util.HashSet;
 public class ComedianMapperImpl implements ComedianMapper {
     /**
      * To map single comedianDTO to comedian
-     * @param comedianDTO
+     * @param comedianDTO - A ComedianDTO
      * @return comedian
      */
     @Override
@@ -36,7 +34,7 @@ public class ComedianMapperImpl implements ComedianMapper {
 
     /**
      * To map multiple comedians to comedianDTOs
-     * @param comedians
+     * @param comedians - A Comedian Collection
      * @return comedianDTOs
      */
     @Override
@@ -60,7 +58,7 @@ public class ComedianMapperImpl implements ComedianMapper {
 
     /**
      * to map single comedian to comedianDTO
-     * @param comedian
+     * @param comedian - A Comedian object
      * @return comedianDTO
      */
     @Override
@@ -80,7 +78,7 @@ public class ComedianMapperImpl implements ComedianMapper {
 
     /**
      * to map single createComedianDTO to comedianDTO
-     * @param createComedianDTO
+     * @param createComedianDTO - A CreateComedianDTO
      * @return comedianDTO
      */
     @Override

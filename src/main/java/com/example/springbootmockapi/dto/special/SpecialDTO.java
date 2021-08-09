@@ -1,13 +1,8 @@
 package com.example.springbootmockapi.dto.special;
-
-import com.example.springbootmockapi.entity.comedian.Comedian;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -35,12 +30,5 @@ public class SpecialDTO {
         this.name = name;
         this.description = description;
     }
-
-    public SpecialDTO(String name, String description, String comedianId) {
-        this.name = name;
-        this.description = description;
-        this.comedianId = comedianId;
-    }
-
 
 }

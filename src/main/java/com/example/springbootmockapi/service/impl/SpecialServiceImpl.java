@@ -1,15 +1,10 @@
 package com.example.springbootmockapi.service.impl;
 
-import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.dto.special.SpecialDTO;
-import com.example.springbootmockapi.entity.comedian.Comedian;
-import com.example.springbootmockapi.exception.ResourceNotFoundException;
 import com.example.springbootmockapi.entity.special.Special;
-import com.example.springbootmockapi.mapper.ComedianMapper;
 import com.example.springbootmockapi.mapper.SpecialMapper;
 import com.example.springbootmockapi.repository.SpecialRepository;
-import com.example.springbootmockapi.service.ComedianService;
 import com.example.springbootmockapi.service.SpecialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,34 +23,30 @@ public class SpecialServiceImpl implements SpecialService {
     @Autowired
     private SpecialMapper specialMapper;
 
-    @Autowired
-    private ComedianMapper comedianMapper;
     //private ComedianMapper comedianMapper = Mappers.getMapper(ComedianMapper.class);
 
     @Autowired
     private SpecialRepository repository;
 
-    @Autowired
-    private ComedianService comedianService;
 
     /***
      * (01) To search and return single Special from Repository.
-     * @param id
+     * @param id - id of the Special to be retrieved.
      * @return special
      */
     @Override
     public SpecialDTO getASpecial(String id) {
         if(repository.existsById(id)) {
             Optional<Special> optionalSpecial =  repository.findById(id);
-            SpecialDTO fetchedSpecialDTO = specialMapper.specialToSpecialDTO(optionalSpecial.get());
-            return fetchedSpecialDTO;
+            System.out.println(optionalSpecial.get().getDescription());
+            return specialMapper.specialToSpecialDTO(optionalSpecial.get());
         }
         return null;
     }
 
     /***
      * (02) to create a new comedian
-     * @param createSpecialDTO
+     * @param createSpecialDTO - A CreateSpecialDTO object
      * @return newSpecial
      */
     @Override
@@ -68,7 +59,7 @@ public class SpecialServiceImpl implements SpecialService {
 
     /***
      * (03) To update a comedian
-     * @param id
+     * @param id - id of the Comedian to be updated.
      * @param newCreateSpecialDTO
      * @return special
      */
@@ -96,7 +87,7 @@ public class SpecialServiceImpl implements SpecialService {
 
     /***
      * (04) to delete comedian
-     * @param id
+     * @param id - id of the Comedian to be deleted.
      * @return deletedOrNot
      */
     @Override

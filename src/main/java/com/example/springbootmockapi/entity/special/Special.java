@@ -1,24 +1,9 @@
 package com.example.springbootmockapi.entity.special;
-
-import com.example.springbootmockapi.entity.comedian.Comedian;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
-import java.util.List;
 
-/*
-@NoArgsConstructor
-
-@ToString
-@EqualsAndHashCode
-@Entity
-@Table(name = "special")
-*/
 @Getter
 @Setter
 @NoArgsConstructor

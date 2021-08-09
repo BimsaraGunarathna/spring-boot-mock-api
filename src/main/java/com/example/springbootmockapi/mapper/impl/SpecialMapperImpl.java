@@ -1,6 +1,5 @@
 package com.example.springbootmockapi.mapper.impl;
 
-import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.dto.special.SpecialDTO;
 import com.example.springbootmockapi.entity.special.Special;
@@ -15,7 +14,7 @@ public class SpecialMapperImpl implements SpecialMapper {
 
     /**
      * to map special to a specialDTO
-     * @param special
+     * @param special - A Special object
      * @return specialDTO
      */
     @Override
@@ -28,8 +27,8 @@ public class SpecialMapperImpl implements SpecialMapper {
 
         specialDTO.setId(special.getId());
         specialDTO.setName(special.getName());
-        specialDTO.setDescription(specialDTO.getDescription());
-        specialDTO.setComedianId(specialDTO.getComedianId());
+        specialDTO.setDescription(special.getDescription());
+        specialDTO.setComedianId(special.getComedianId());
 
         return specialDTO;
 
@@ -37,7 +36,7 @@ public class SpecialMapperImpl implements SpecialMapper {
 
     /**
      * to map specialDTO to special
-     * @param specialDTO
+     * @param specialDTO - A SpecialDTO object
      * @return special
      */
     @Override
@@ -56,7 +55,7 @@ public class SpecialMapperImpl implements SpecialMapper {
 
     /**
      * to map multiple specials to specialDTOs
-     * @param specials
+     * @param specials - A Special Collection
      * @return specialDTOs
      */
     @Override
@@ -81,7 +80,7 @@ public class SpecialMapperImpl implements SpecialMapper {
 
     /**
      * to map a createSpecialDTO to a specialDTO
-     * @param createSpecialDTO
+     * @param createSpecialDTO - A CreateSpecialDTO
      * @return specialDTO
      */
     @Override
@@ -90,11 +89,9 @@ public class SpecialMapperImpl implements SpecialMapper {
             return null;
         }
 
-        SpecialDTO specialDTO = new SpecialDTO(
+        return new SpecialDTO(
                 createSpecialDTO.getName(),
                 createSpecialDTO.getDescription()
         );
-
-        return specialDTO;
     }
 }

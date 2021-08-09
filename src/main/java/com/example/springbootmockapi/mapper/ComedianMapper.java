@@ -4,7 +4,7 @@ import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.comedian.CreateComedianDTO;
 import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.entity.comedian.Comedian;
-import com.example.springbootmockapi.entity.special.Special;
+
 import org.mapstruct.Mapper;
 
 import java.util.Collection;

@@ -3,7 +3,6 @@ package com.example.springbootmockapi.service.impl;
 import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.comedian.CreateComedianDTO;
 import com.example.springbootmockapi.entity.comedian.Comedian;
-import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.mapper.ComedianMapper;
 import com.example.springbootmockapi.repository.ComedianRepository;
 import com.example.springbootmockapi.service.ComedianService;
@@ -30,7 +29,7 @@ public class ComedianServiceImpl implements ComedianService {
 
     /***
      * to search and return single Comedian from Repository.
-     * @param id
+     * @param id - id of the Comedian to be retrieved
      * @return comedian
      */
     @Override
@@ -45,23 +44,22 @@ public class ComedianServiceImpl implements ComedianService {
 
     /***
      * to create a new comedian
-     * @param createComedianDTO
+     * @param createComedianDTO - A CreateComedianDTO object
      * @return comedian
      */
     @Override
     public ComedianDTO createComedian(CreateComedianDTO createComedianDTO) {
         ComedianDTO comedianDTO =  comedianMapper.createComedianDTOToComedianDTO(createComedianDTO);
-        Comedian optionalComedian =  comedianRepository.save(comedianMapper.comedianDTOToComedian(comedianDTO));
+        comedianRepository.save(comedianMapper.comedianDTOToComedian(comedianDTO));
         return comedianDTO;
     }
 
     /***
      * to update a comedian
-     * @param id
-     * @param newCreateComedianDTO
+     * @param id - id of the Comedian to be updated
+     * @param newCreateComedianDTO - A CreateComedianDTO object
      * @return comedian
      */
-    //(03) to change a comedian
     @Override
     public ComedianDTO updateComedian(String id, CreateComedianDTO newCreateComedianDTO) {
 
@@ -85,7 +83,7 @@ public class ComedianServiceImpl implements ComedianService {
 
     /***
      * to delete comedian
-     * @param id
+     * @param id - id of Comedian to be deleted
      * @return deletedOrNot
      */
     @Override

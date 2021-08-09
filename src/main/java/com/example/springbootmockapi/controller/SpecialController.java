@@ -1,6 +1,5 @@
 package com.example.springbootmockapi.controller;
 
-import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.dto.special.SpecialDTO;
 import com.example.springbootmockapi.entity.special.Special;
@@ -37,12 +36,12 @@ public class SpecialController {
     public ResponseEntity<CMSResponse> getSpecials() {
         Collection<Special> specials = specialService.getSpecials();
         CMSResponse response = new CMSResponse(HttpStatus.CREATED, specials,"Specials are retrieved successfully.");
-        return new ResponseEntity<CMSResponse>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /***
-     * to create a new comedian
-     * @param createSpecialDTO
+     * to create a new special
+     * @param createSpecialDTO - CreateSpecialDTO object to create a new special
      * @return ResponseEntity
      */
     @PostMapping()
@@ -50,12 +49,12 @@ public class SpecialController {
         SpecialDTO special = specialService.createSpecial(createSpecialDTO);
         CMSResponse<SpecialDTO> cmsResponse = new CMSResponse<>(HttpStatus.CREATED, special, "A new comedian is created.");
 
-        return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>( cmsResponse, HttpStatus.CREATED);
     }
 
     /***
      * to return a single comedian
-     * @param id
+     * @param id - id of comedian to be retrieved.
      * @return special
      */
     @GetMapping("/{id}")
@@ -67,13 +66,13 @@ public class SpecialController {
         } else {
             cmsResponse = new CMSResponse<>(HttpStatus.OK, fetchedSpecialDTO, "Special is retrieved successfully");
         }
-        return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.OK);
+        return new ResponseEntity<>( cmsResponse, HttpStatus.OK);
     }
 
     /***
-     * to change a comedian
-     * @param newCreateSpecialDTO
-     * @param id
+     * to change a special
+     * @param newCreateSpecialDTO - CreateSpecialDTO for updating a special
+     * @param id - id of comedian to be updated
      * @return updatedSpecial
      */
     @PutMapping("/{id}")
@@ -86,12 +85,12 @@ public class SpecialController {
         } else {
             cmsResponse = new CMSResponse<>(HttpStatus.OK, updatedSpecialDTO, "Special is updated successfully");
         }
-        return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.OK);
+        return new ResponseEntity<>( cmsResponse, HttpStatus.OK);
     }
 
     /***
-     * to delete a comedian
-     * @param id
+     * to delete a special
+     * @param id - id of special to be deleted
      * @return ResponseEntity
      */
     @DeleteMapping("/{id}")
