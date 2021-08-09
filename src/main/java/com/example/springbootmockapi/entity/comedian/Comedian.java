@@ -3,6 +3,7 @@ package com.example.springbootmockapi.entity.comedian;
 import com.example.springbootmockapi.entity.special.Special;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -11,24 +12,25 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
-@Entity
-@NoArgsConstructor
+/*
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
+@Entity
 @Table(name = "comedian")
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+@Document
 public class Comedian {
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    String id;
 
-    @Column(name="name")
     private String name;
 
-    @Column(name="role")
     private String role;
 
 

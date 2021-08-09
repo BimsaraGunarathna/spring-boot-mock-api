@@ -1,6 +1,7 @@
 package com.example.springbootmockapi.controller;
 
-import com.example.springbootmockapi.dto.SpecialDTO;
+import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
+import com.example.springbootmockapi.dto.special.SpecialDTO;
 import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.response.CMSResponse;
 import com.example.springbootmockapi.service.SpecialService;
@@ -41,13 +42,12 @@ public class SpecialController {
 
     /***
      * (02) to create a new comedian
-     * @param newSpecialDTO
+     * @param createSpecialDTO
      * @return ResponseEntity
      */
     @PostMapping()
-    public ResponseEntity<CMSResponse> newSpecial(@Valid @RequestBody SpecialDTO newSpecialDTO) {
-        //SpecialResponse response = new SpecialResponse("A new comedian is created.", specialService.createSpecial(newSpecial));
-        Special special = specialService.createSpecial(newSpecialDTO);
+    public ResponseEntity<CMSResponse> newSpecial(@Valid @RequestBody CreateSpecialDTO createSpecialDTO) {
+        Special special = specialService.createSpecial(createSpecialDTO);
         CMSResponse<Special> cmsResponse = new CMSResponse<>(HttpStatus.CREATED, special, "A new comedian is created.");
 
         return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.CREATED);
@@ -59,12 +59,12 @@ public class SpecialController {
      * @return special
      */
     @GetMapping("/{id}")
-    public ResponseEntity<CMSResponse> getASpecial (@PathVariable Long id) {
+    public ResponseEntity<CMSResponse> getASpecial (@PathVariable String id) {
         System.out.println( id);
 
-        Special fetchedSpecial = specialService.getASpecial(id.toString());
+        SpecialDTO fetchedSpecialDTO = specialService.getASpecial(id);
 
-        CMSResponse<Special> cmsResponse = new CMSResponse<Special>(HttpStatus.CREATED, fetchedSpecial,"Comedian retrieved successfully!");
+        CMSResponse<SpecialDTO> cmsResponse = new CMSResponse<SpecialDTO>(HttpStatus.CREATED, fetchedSpecialDTO,"Comedian retrieved successfully!");
 
         return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.OK);
     }
@@ -76,8 +76,8 @@ public class SpecialController {
      * @return updatedSpecial
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Object> replaceSpecial(@RequestBody SpecialDTO newSpecialDTO, @PathVariable Long id) {
-        Special updatedSpecial = specialService.updateSpecial(id.toString(), newSpecialDTO);
+    public ResponseEntity<Object> replaceSpecial(@RequestBody SpecialDTO newSpecialDTO, @PathVariable String id) {
+        Special updatedSpecial = specialService.updateSpecial(id, newSpecialDTO);
         return new ResponseEntity<>("Special is updated! " + updatedSpecial, HttpStatus.OK);
 
     }
@@ -88,8 +88,8 @@ public class SpecialController {
      * @return ResponseEntity
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteSpecial(@PathVariable Long id) {
-        boolean deletionStatus = specialService.deleteSpecial(id.toString());
+    public ResponseEntity<String> deleteSpecial(@PathVariable String id) {
+        boolean deletionStatus = specialService.deleteSpecial(id);
         if (deletionStatus) {
             return new ResponseEntity<>("Special is deleted ", HttpStatus.OK);
         }

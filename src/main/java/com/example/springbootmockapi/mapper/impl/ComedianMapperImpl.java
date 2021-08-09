@@ -1,7 +1,10 @@
 package com.example.springbootmockapi.mapper.impl;
 
-import com.example.springbootmockapi.dto.ComedianDTO;
+import com.example.springbootmockapi.dto.comedian.ComedianDTO;
+import com.example.springbootmockapi.dto.comedian.CreateComedianDTO;
+import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.entity.comedian.Comedian;
+import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.mapper.ComedianMapper;
 import org.springframework.stereotype.Component;
 
@@ -26,9 +29,8 @@ public class ComedianMapperImpl implements ComedianMapper {
 
         comedian.setName( comedianDTO.getName());
         comedian.setRole((comedianDTO.getRole()));
-        //comedian.setSpecials(comedianDTO.getSpecials());
-        //comedian.setSpecials(comedianDTO.getSpecials());
-        //System.out.println("SPECIAL:" + comedianDTO.getSpecials());
+
+
         return comedian;
     }
 
@@ -46,9 +48,10 @@ public class ComedianMapperImpl implements ComedianMapper {
         Collection<ComedianDTO> comedianDTOs = new HashSet<>();
         for(Comedian comedian : comedians ) {
             comedianDTOs.add(new ComedianDTO(
+                    comedian.getId(),
                     comedian.getName(),
                     comedian.getRole()
-                    //comedian.getSpecials()
+
             ));
         }
         return comedianDTOs;
@@ -66,8 +69,29 @@ public class ComedianMapperImpl implements ComedianMapper {
             return null;
         }
         ComedianDTO comedianDTO = new ComedianDTO(
+                comedian.getId(),
                 comedian.getName(),
                 comedian.getRole()
+
+        );
+
+        return comedianDTO;
+    }
+
+    /**
+     * to map single createComedianDTO to comedianDTO
+     * @param createComedianDTO
+     * @return comedianDTO
+     */
+    @Override
+    public ComedianDTO createComedianDTOToComedianDTO(CreateComedianDTO createComedianDTO) {
+        if (createComedianDTO == null) {
+            return null;
+        }
+
+        ComedianDTO comedianDTO = new ComedianDTO(
+                createComedianDTO.getName(),
+                createComedianDTO.getRole()
         );
 
         return comedianDTO;

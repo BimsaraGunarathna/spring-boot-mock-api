@@ -1,12 +1,12 @@
 package com.example.springbootmockapi.service.impl;
 
-import com.example.springbootmockapi.dto.ComedianDTO;
+import com.example.springbootmockapi.dto.comedian.ComedianDTO;
+import com.example.springbootmockapi.dto.comedian.CreateComedianDTO;
 import com.example.springbootmockapi.entity.comedian.Comedian;
+import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.mapper.ComedianMapper;
-import com.example.springbootmockapi.mapper.impl.ComedianMapperImpl;
 import com.example.springbootmockapi.repository.ComedianRepository;
 import com.example.springbootmockapi.service.ComedianService;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,84 +22,85 @@ import java.util.Optional;
 public class ComedianServiceImpl implements ComedianService {
 
     @Autowired
-    private ComedianRepository repository;
+    private ComedianRepository comedianRepository;
 
     //private ComedianMapper comedianMapper = Mappers.getMapper(ComedianMapperImpl.class);
     @Autowired
     private ComedianMapper comedianMapper;
 
     /***
-     * (01) To search and return single Comedian from Repository.
+     * to search and return single Comedian from Repository.
      * @param id
      * @return comedian
      */
     @Override
     public ComedianDTO getAComedian(String id) {
+        Optional<Comedian> optionalComedian =  comedianRepository.findById(id);
 
-        Long idInLong = Long.valueOf(id);
-        Optional<Comedian> optional = repository.findById(idInLong);
-        ComedianDTO fetchedComedianDTO = comedianMapper.comedianToComedianDTO(optional.get());
+
+        ComedianDTO fetchedComedianDTO = comedianMapper.comedianToComedianDTO(optionalComedian.get());
         return fetchedComedianDTO;
     }
 
     /***
-     * (02) to create a new comedian
-     * @param comedianDTO
+     * to create a new comedian
+     * @param createComedianDTO
      * @return comedian
      */
     @Override
-    public Comedian createComedian(ComedianDTO comedianDTO) {
-        return repository.save(comedianMapper.comedianDTOToComedian(comedianDTO));
+    public ComedianDTO createComedian(CreateComedianDTO createComedianDTO) {
+        ComedianDTO comedianDTO =  comedianMapper.createComedianDTOToComedianDTO(createComedianDTO);
+        Comedian optionalComedian =  comedianRepository.save(comedianMapper.comedianDTOToComedian(comedianDTO));
+        return comedianDTO;
     }
 
     /***
-     * (03) To update a comedian
+     * to update a comedian
      * @param id
      * @param newComedianDTO
      * @return comedian
      */
     //(03) to change a comedian
     @Override
-    public Comedian updateComedian(String id, ComedianDTO newComedianDTO) {
-        Long idInLong = Long.valueOf(id);
+    public ComedianDTO updateComedian(String id, ComedianDTO newComedianDTO) {
 
-        return repository.findById(idInLong)
+
+        comedianRepository.findById(id)
                 .map(singleComedian -> {
                     singleComedian.setName(newComedianDTO.getName());
                     singleComedian.setRole(newComedianDTO.getRole());
-                    return repository.save(singleComedian);
+                    return comedianRepository.save(singleComedian);
                 })
                 .orElseGet(() -> {
-                    newComedianDTO.setId(idInLong);
+                    newComedianDTO.setId(id);
                     Comedian newComedian = comedianMapper.comedianDTOToComedian(newComedianDTO);
-                    return repository.save(newComedian);
+                    return comedianRepository.save(newComedian);
                 });
-
+        return newComedianDTO;
     }
 
     /***
-     * (04) to delete comedian
+     * to delete comedian
      * @param id
      * @return deletedOrNot
      */
     @Override
     public boolean deleteComedian(String id) {
-        Long idInLong = Long.valueOf(id);
         //handle the event comedian doesn't exits
-        if (repository.existsById(idInLong)) {
-            System.out.println(repository.findById(idInLong));
-            repository.deleteById(idInLong);
+        if (comedianRepository.existsById(id)) {
+            System.out.println(comedianRepository.findById(id));
+            comedianRepository.deleteById(id);
             return true;
         }
         return false;
     }
 
     /***
-     * (05) to get all the comedians
+     * to get all the comedians
      * @return comedians
      */
     @Override
     public Collection<ComedianDTO> getComedians() {
-        return comedianMapper.comediansToComedianDTOs(repository.findAll());
+        return comedianMapper.comediansToComedianDTOs(comedianRepository.findAll());
     }
 }

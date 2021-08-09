@@ -1,42 +1,42 @@
-package com.example.springbootmockapi.dto;
+package com.example.springbootmockapi.dto.special;
 
 import com.example.springbootmockapi.entity.comedian.Comedian;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
+@AllArgsConstructor
 public class SpecialDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @JsonProperty("comedianName")
+    @Id
+    private String id;
+
+    @JsonProperty("name")
     @NotEmpty(message = "Name can't be empty.")
     private String name;
 
-    @JsonProperty("specialDescription")
+    @JsonProperty("description")
     @NotEmpty(message = "Name can't be empty.")
     private String description;
 
-    @JsonProperty("specialComedianId")
-    private Long comedianId;
+    @JsonProperty("comedianId")
+    private String comedianId;
 
     public SpecialDTO(String name, String description) {
+
         this.name = name;
         this.description = description;
     }
 
-    public SpecialDTO(String name, String description, Long comedianId) {
+    public SpecialDTO(String name, String description, String comedianId) {
         this.name = name;
         this.description = description;
         this.comedianId = comedianId;

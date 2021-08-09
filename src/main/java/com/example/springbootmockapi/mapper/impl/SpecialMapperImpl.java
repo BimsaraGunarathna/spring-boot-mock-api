@@ -1,6 +1,8 @@
 package com.example.springbootmockapi.mapper.impl;
 
-import com.example.springbootmockapi.dto.SpecialDTO;
+import com.example.springbootmockapi.dto.comedian.ComedianDTO;
+import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
+import com.example.springbootmockapi.dto.special.SpecialDTO;
 import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.mapper.SpecialMapper;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,7 @@ public class SpecialMapperImpl implements SpecialMapper {
 
         SpecialDTO specialDTO = new SpecialDTO();
 
+        specialDTO.setId(special.getId());
         specialDTO.setName(special.getName());
         specialDTO.setDescription(specialDTO.getDescription());
         specialDTO.setComedianId(specialDTO.getComedianId());
@@ -67,11 +70,31 @@ public class SpecialMapperImpl implements SpecialMapper {
         for(Special special : specials ) {
             specialDTOs.add(
                     new SpecialDTO(
+                            special.getId(),
                             special.getName(),
                             special.getDescription(),
                             special.getComedianId()
                     ));
         }
         return specialDTOs;
+    }
+
+    /**
+     * to map a createSpecialDTO to a specialDTO
+     * @param createSpecialDTO
+     * @return specialDTO
+     */
+    @Override
+    public SpecialDTO createSpecialDTOToSpecialDTO(CreateSpecialDTO createSpecialDTO) {
+        if (createSpecialDTO == null) {
+            return null;
+        }
+
+        SpecialDTO specialDTO = new SpecialDTO(
+                createSpecialDTO.getName(),
+                createSpecialDTO.getDescription()
+        );
+
+        return specialDTO;
     }
 }

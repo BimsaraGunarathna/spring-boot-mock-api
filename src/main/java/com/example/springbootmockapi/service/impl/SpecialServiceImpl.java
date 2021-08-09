@@ -1,7 +1,9 @@
 package com.example.springbootmockapi.service.impl;
 
-import com.example.springbootmockapi.dto.ComedianDTO;
-import com.example.springbootmockapi.dto.SpecialDTO;
+import com.example.springbootmockapi.dto.comedian.ComedianDTO;
+import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
+import com.example.springbootmockapi.dto.special.SpecialDTO;
+import com.example.springbootmockapi.entity.comedian.Comedian;
 import com.example.springbootmockapi.exception.ResourceNotFoundException;
 import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.mapper.ComedianMapper;
@@ -9,18 +11,17 @@ import com.example.springbootmockapi.mapper.SpecialMapper;
 import com.example.springbootmockapi.repository.SpecialRepository;
 import com.example.springbootmockapi.service.ComedianService;
 import com.example.springbootmockapi.service.SpecialService;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /***
  * To store specials to JPA
  * @author Bimsara Gunarathna
  * @since 7/23/2021
  */
-
 @Service
 public class SpecialServiceImpl implements SpecialService {
 
@@ -43,25 +44,27 @@ public class SpecialServiceImpl implements SpecialService {
      * @return special
      */
     @Override
-    public Special getASpecial(String id) {
-        Long idInLong = Long.valueOf(id);
-        return repository.findById(idInLong).orElseThrow(() -> new ResourceNotFoundException("Could not find special"));
+    public SpecialDTO getASpecial(String id) {
+        //Long idInLong = Long.valueOf(id);
+        Optional<Special> optionalSpecial =  repository.findById(id);
+
+        SpecialDTO fetchedSpecialDTO = specialMapper.specialToSpecialDTO(optionalSpecial.get());
+        return fetchedSpecialDTO;
     }
 
     /***
      * (02) to create a new comedian
-     * @param specialDTO
+     * @param createSpecialDTO
      * @return newSpecial
      */
     @Override
-    public Special createSpecial(SpecialDTO specialDTO) {
-        //Special mappedSpecial = mapper.
-        ComedianDTO comedianDTO = comedianService.getAComedian(specialDTO.getComedianId().toString());
-        Special newSpecial = new Special(specialDTO.getName(), specialDTO.getDescription());
+    public Special createSpecial(CreateSpecialDTO createSpecialDTO) {
+        SpecialDTO specialDTO = specialMapper.createSpecialDTOToSpecialDTO(createSpecialDTO);
+        Special newSpecial = specialMapper.specialDTOToSpecial(specialDTO);
         return repository.save(newSpecial);
     }
 
-    public SpecialDTO findASpecial(Long id) {
+    public SpecialDTO findASpecial(String id) {
         Special specialFound = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Could not find special"));
 
         SpecialDTO specialDTO = specialMapper.specialToSpecialDTO(specialFound);
@@ -78,16 +81,15 @@ public class SpecialServiceImpl implements SpecialService {
     //(03) to change a comedian
     @Override
     public Special updateSpecial(String id, SpecialDTO newSpecialDTO) {
-        Long idInLong = Long.valueOf(id);
 
-        return repository.findById(idInLong)
+        return repository.findById(id)
                 .map(singleSpecial -> {
                     singleSpecial.setName(newSpecialDTO.getName());
                     singleSpecial.setDescription(newSpecialDTO.getDescription());
                     return repository.save(singleSpecial);
                 })
                 .orElseGet(() -> {
-                    newSpecialDTO.setId(idInLong);
+                    newSpecialDTO.setId(id);
                     Special newSpecial = specialMapper.specialDTOToSpecial(newSpecialDTO);
                     return repository.save(newSpecial);
                 });
@@ -100,11 +102,10 @@ public class SpecialServiceImpl implements SpecialService {
      */
     @Override
     public boolean deleteSpecial(String id) {
-        Long idInLong = Long.valueOf(id);
         //handle the event comedian doesn't exits
-        if (repository.existsById(idInLong)) {
-            System.out.println(repository.findById(idInLong));
-            repository.deleteById(idInLong);
+        if (repository.existsById(id)) {
+            System.out.println(repository.findById(id));
+            repository.deleteById(id);
             return true;
         }
         return false;

@@ -6,37 +6,41 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
+/*
 @NoArgsConstructor
-@Getter
-@Setter
+
 @ToString
 @EqualsAndHashCode
+@Entity
 @Table(name = "special")
+*/
+@Getter
+@Setter
+@NoArgsConstructor
+@Document
 public class Special {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private Long id;
-    @Column(name="name")
+    private String id;
+
     private String name;
-    @Column(name="description")
+
     private String description;
 
-    @Column(name="comedianId")
-    private Long comedianId;
+    private String comedianId;
 
     public Special(String name, String description) {
         this.name = name;
         this.description = description;
     }
 
-    public Special(String name, String description, Long comedianId) {
+    public Special(String name, String description, String comedianId) {
         this.name = name;
         this.description = description;
         this.comedianId = comedianId;

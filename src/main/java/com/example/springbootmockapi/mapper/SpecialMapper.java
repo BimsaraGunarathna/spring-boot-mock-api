@@ -1,9 +1,9 @@
 package com.example.springbootmockapi.mapper;
 
-import com.example.springbootmockapi.dto.SpecialDTO;
+import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
+import com.example.springbootmockapi.dto.special.SpecialDTO;
 import com.example.springbootmockapi.entity.special.Special;
 import org.mapstruct.Mapper;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
@@ -17,4 +17,6 @@ public interface SpecialMapper {
     SpecialDTO specialToSpecialDTO(Special special);
     Special specialDTOToSpecial(SpecialDTO specialDTO);
     Collection<SpecialDTO> specialsToSpecialDTOs(Collection<Special> specials);
+
+    SpecialDTO createSpecialDTOToSpecialDTO(CreateSpecialDTO createSpecialDTO);
 }
