@@ -1,7 +1,7 @@
 package com.example.springbootmockapi.controller;
 
-import com.example.springbootmockapi.dto.ComedianDTO;
-import com.example.springbootmockapi.entity.comedian.Comedian;
+import com.example.springbootmockapi.dto.comedian.ComedianDTO;
+import com.example.springbootmockapi.dto.comedian.CreateComedianDTO;
 import com.example.springbootmockapi.response.CMSResponse;
 import com.example.springbootmockapi.service.ComedianService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,65 +34,68 @@ public class ComedianController {
     @GetMapping
     public ResponseEntity<CMSResponse> getComedians() {
         Collection<ComedianDTO> retrievedComedians = comedianService.getComedians();
-        CMSResponse<Collection<ComedianDTO>> cmsResponse = new CMSResponse<>(HttpStatus.OK.value(), retrievedComedians, "Comedians are retrieved successfully");
-        return new ResponseEntity<CMSResponse>(cmsResponse, HttpStatus.OK);
+        CMSResponse<Collection<ComedianDTO>> cmsResponse = new CMSResponse<>(HttpStatus.OK, retrievedComedians, "Comedians are retrieved successfully");
+        return new ResponseEntity<>(cmsResponse, HttpStatus.OK);
     }
 
     /***
      * to return a single comedian
-     * @param id
+     * @param id -
      * @return comedian
      */
     @GetMapping( "/{id}")
-    public ResponseEntity<CMSResponse> getAComedian(@PathVariable Long id) {
+    public ResponseEntity<CMSResponse> getAComedian(@PathVariable String id) {
         System.out.println( id);
-        ComedianDTO fetchedComedianDTO = comedianService.getAComedian(id.toString());
+        ComedianDTO fetchedComedianDTO = comedianService.getAComedian(id);
         CMSResponse<ComedianDTO> cmsResponse;
         if (fetchedComedianDTO == null) {
-            cmsResponse = new CMSResponse<>(HttpStatus.NOT_FOUND.value(), null, "Comedian not found");
+            cmsResponse = new CMSResponse<>(HttpStatus.NOT_FOUND, null, "Comedian not found");
         } else {
-            cmsResponse = new CMSResponse<>(HttpStatus.OK.value(), fetchedComedianDTO, "Comedian is retrieved successfully");
+            cmsResponse = new CMSResponse<>(HttpStatus.OK, fetchedComedianDTO, "Comedian is retrieved successfully");
         }
 
-        return new ResponseEntity<CMSResponse>( cmsResponse, HttpStatus.OK);
+        return new ResponseEntity<>( cmsResponse, HttpStatus.OK);
     }
 
     /***
      * to create a new comedian
-     * @param newComedian
+     * @param newCreateComedianDTO - CreateComedianDTO object to create a new comedian
      * @return ResponseEntity
      */
     @PostMapping
-    public ResponseEntity<CMSResponse> newComedian(@Valid @RequestBody ComedianDTO newComedian) {
-        //ComedianResponse response = new ComedianResponse("A new comedian is created.", comedianService.createComedian(newComedian));
-        //Comedian comedian = response.getComedian();
-        Comedian comedian = comedianService.createComedian(newComedian);
-        CMSResponse<Comedian> cmsResponse = new CMSResponse<>(HttpStatus.OK.value(), comedian, "Comedian is created successfully");
-        System.out.println("@POST: " + newComedian.getSpecials());
-        return new ResponseEntity<CMSResponse>(cmsResponse, HttpStatus.CREATED);
+    public ResponseEntity<CMSResponse> newComedian(@Valid @RequestBody CreateComedianDTO newCreateComedianDTO) {
+        ComedianDTO comedian = comedianService.createComedian(newCreateComedianDTO);
+        CMSResponse<ComedianDTO> cmsResponse = new CMSResponse<>(HttpStatus.OK, comedian, "Comedian is created successfully");
+        System.out.println("@POST: " + newCreateComedianDTO.getName());
+        return new ResponseEntity<>(cmsResponse, HttpStatus.CREATED);
     }
 
     /***
      * to change a comedian
-     * @param newComedian
-     * @param id
+     * @param newCreateComedian - comedian instance to be created
+     * @param id - id of comedian to be changed
      * @return updatedComedian
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Object> replaceComedian(@RequestBody ComedianDTO newComedian, @PathVariable Long id) {
-        Comedian updatedComedian = comedianService.updateComedian(id.toString(), newComedian);
-        return new ResponseEntity<>("Comedian is updated! " + updatedComedian, HttpStatus.OK);
-
+    public ResponseEntity<CMSResponse> replaceComedian(@RequestBody CreateComedianDTO newCreateComedian, @PathVariable String id) {
+        ComedianDTO updatedComedian = comedianService.updateComedian(id, newCreateComedian);
+        CMSResponse<ComedianDTO> _cmsResponse;
+        if (updatedComedian == null) {
+            _cmsResponse = new CMSResponse<>(HttpStatus.NOT_FOUND, null, "Comedian can't found to be updated.");
+        } else {
+            _cmsResponse = new CMSResponse<>(HttpStatus.OK, updatedComedian, "Comedian is updated successfully");
+        }
+        return new ResponseEntity<>( _cmsResponse, HttpStatus.OK);
     }
 
     /***
      * to delete a comedian
-     * @param id
+     * @param id - id of comedian to be deleted
      * @return ResponseEntity
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteComedian(@PathVariable Long id) {
-        boolean deletionStatus = comedianService.deleteComedian(id.toString());
+    public ResponseEntity<String> deleteComedian(@PathVariable String id) {
+        boolean deletionStatus = comedianService.deleteComedian(id);
         if (deletionStatus) {
             return new ResponseEntity<>("Comedian is deleted ", HttpStatus.OK);
         }

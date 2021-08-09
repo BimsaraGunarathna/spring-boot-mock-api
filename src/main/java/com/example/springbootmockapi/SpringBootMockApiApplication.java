@@ -20,23 +20,3 @@ public class SpringBootMockApiApplication {
     }
 
 }
-
-/*
-@SpringBootApplication
-public class SpringBootMockApiApplication implements CommandLineRunner {
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBootMockApiApplication.class, args);
-    }
-
-    @Override
-    public void run(String... args) throws Exception {
-        String sql = "SELECT * FROM specials";
-        List<Special> specials = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Special.class));
-        specials.forEach(System.out :: println);
-    }
-}
-*/

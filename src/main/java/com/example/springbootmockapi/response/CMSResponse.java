@@ -1,6 +1,7 @@
 package com.example.springbootmockapi.response;
 
 import lombok.*;
+import org.springframework.http.HttpStatus;
 
 import java.util.Date;
 /**
@@ -13,12 +14,12 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 public class CMSResponse<T> {
-    private int code;
+    private HttpStatus code;
     private  T  payload;
     private String message;
     private long timestamp = new Date().getTime();
 
-    public CMSResponse(int code, T payload, String message) {
+    public CMSResponse(HttpStatus code, T payload, String message) {
         this.code = code;
         this.payload = payload;
         this.message = message;
