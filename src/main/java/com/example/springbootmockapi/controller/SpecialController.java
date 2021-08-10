@@ -1,6 +1,5 @@
 package com.example.springbootmockapi.controller;
 
-import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.dto.special.SpecialDTO;
 import com.example.springbootmockapi.response.CMSResponse;
 import com.example.springbootmockapi.service.SpecialService;
@@ -40,12 +39,12 @@ public class SpecialController {
 
     /***
      * to create a new special
-     * @param createSpecialDTO - CreateSpecialDTO object to create a new special
+     * @param specialDTO - CreateSpecialDTO object to create a new special
      * @return ResponseEntity
      */
     @PostMapping()
-    public ResponseEntity<CMSResponse<SpecialDTO>> newSpecial(@Valid @RequestBody CreateSpecialDTO createSpecialDTO) {
-        SpecialDTO special = specialService.createSpecial(createSpecialDTO);
+    public ResponseEntity<CMSResponse<SpecialDTO>> newSpecial(@Valid @RequestBody SpecialDTO specialDTO) {
+        SpecialDTO special = specialService.createSpecial(specialDTO);
         CMSResponse<SpecialDTO> cmsResponse = new CMSResponse<>(HttpStatus.CREATED, special, "A new comedian is created.");
 
         return new ResponseEntity<>( cmsResponse, HttpStatus.CREATED);
@@ -70,13 +69,13 @@ public class SpecialController {
 
     /***
      * to change a special
-     * @param newCreateSpecialDTO - CreateSpecialDTO for updating a special
+     * @param newSpecialDTO - CreateSpecialDTO for updating a special
      * @param id - id of comedian to be updated
      * @return updatedSpecial
      */
     @PutMapping("/{id}")
-    public ResponseEntity<CMSResponse<SpecialDTO>> replaceSpecial(@RequestBody CreateSpecialDTO newCreateSpecialDTO, @PathVariable String id) {
-        SpecialDTO updatedSpecialDTO = specialService.updateSpecial(id, newCreateSpecialDTO);
+    public ResponseEntity<CMSResponse<SpecialDTO>> replaceSpecial(@RequestBody SpecialDTO newSpecialDTO, @PathVariable String id) {
+        SpecialDTO updatedSpecialDTO = specialService.updateSpecial(id, newSpecialDTO);
 
         CMSResponse<SpecialDTO> cmsResponse;
         if (updatedSpecialDTO == null) {

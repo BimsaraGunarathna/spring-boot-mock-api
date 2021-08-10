@@ -1,5 +1,4 @@
 package com.example.springbootmockapi.service.impl;
-import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.dto.special.SpecialDTO;
 import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.mapper.SpecialMapper;
@@ -48,12 +47,11 @@ public class SpecialServiceImpl implements SpecialService {
 
     /***
      * to create a new comedian
-     * @param createSpecialDTO - A CreateSpecialDTO object
+     * @param specialDTO - A specialDTO object
      * @return newSpecial
      */
     @Override
-    public SpecialDTO createSpecial(CreateSpecialDTO createSpecialDTO) {
-        SpecialDTO specialDTO = specialMapper.createSpecialDTOToSpecialDTO(createSpecialDTO);
+    public SpecialDTO createSpecial(SpecialDTO specialDTO) {
         Special newSpecial = specialMapper.specialDTOToSpecial(specialDTO);
         repository.save(newSpecial);
         return specialDTO;
@@ -62,13 +60,12 @@ public class SpecialServiceImpl implements SpecialService {
     /***
      * To update a comedian
      * @param id - id of the Comedian to be updated.
-     * @param newCreateSpecialDTO
+     * @param newSpecialDTO
      * @return special
      */
     //(03) to change a comedian
     @Override
-    public SpecialDTO updateSpecial(String id, CreateSpecialDTO newCreateSpecialDTO) {
-        SpecialDTO newSpecialDTO = specialMapper.createSpecialDTOToSpecialDTO(newCreateSpecialDTO);
+    public SpecialDTO updateSpecial(String id, SpecialDTO newSpecialDTO) {
         Optional<Special> newSpecial = repository.findById(id)
                 .map(singleSpecial -> {
                     singleSpecial.setName(newSpecialDTO.getName());

@@ -1,6 +1,5 @@
 package com.example.springbootmockapi.mapper.impl;
 
-import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.dto.special.SpecialDTO;
 import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.mapper.SpecialMapper;
@@ -78,23 +77,5 @@ public class SpecialMapperImpl implements SpecialMapper {
                     ));
         }
         return specialDTOs;
-    }
-
-    /**
-     * to map a createSpecialDTO to a specialDTO
-     * @param createSpecialDTO - A CreateSpecialDTO
-     * @return specialDTO
-     */
-    @Override
-    public SpecialDTO createSpecialDTOToSpecialDTO(CreateSpecialDTO createSpecialDTO) {
-        if (createSpecialDTO == null) {
-            return null;
-        }
-
-        return new SpecialDTO(
-                createSpecialDTO.getName(),
-                createSpecialDTO.getDescription(),
-                createSpecialDTO.getComedianId()
-        );
     }
 }

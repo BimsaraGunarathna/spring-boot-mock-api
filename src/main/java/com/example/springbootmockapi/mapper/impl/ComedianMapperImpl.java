@@ -1,6 +1,5 @@
 package com.example.springbootmockapi.mapper.impl;
 import com.example.springbootmockapi.dto.comedian.ComedianDTO;
-import com.example.springbootmockapi.dto.comedian.CreateComedianDTO;
 import com.example.springbootmockapi.entity.comedian.Comedian;
 import com.example.springbootmockapi.mapper.ComedianMapper;
 import org.springframework.stereotype.Component;
@@ -72,21 +71,5 @@ public class ComedianMapperImpl implements ComedianMapper {
         );
     }
 
-    /**
-     * to map single createComedianDTO to comedianDTO
-     * @param createComedianDTO - A CreateComedianDTO
-     * @return comedianDTO
-     */
-    @Override
-    public ComedianDTO createComedianDTOToComedianDTO(CreateComedianDTO createComedianDTO) {
-        if (createComedianDTO == null) {
-            return null;
-        }
 
-
-        return new ComedianDTO(
-                createComedianDTO.getName(),
-                createComedianDTO.getRole()
-        );
-    }
 }

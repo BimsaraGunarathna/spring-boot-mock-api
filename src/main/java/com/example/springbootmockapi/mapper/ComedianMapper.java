@@ -1,7 +1,6 @@
 package com.example.springbootmockapi.mapper;
 
 import com.example.springbootmockapi.dto.comedian.ComedianDTO;
-import com.example.springbootmockapi.dto.comedian.CreateComedianDTO;
 import com.example.springbootmockapi.entity.comedian.Comedian;
 
 import org.mapstruct.Mapper;
@@ -19,5 +18,4 @@ public interface ComedianMapper {
     Collection<ComedianDTO> comediansToComedianDTOs(Collection<Comedian> comedians);
     ComedianDTO comedianToComedianDTO(Comedian comedian);
 
-    ComedianDTO createComedianDTOToComedianDTO(CreateComedianDTO createComedianDTO);
 }

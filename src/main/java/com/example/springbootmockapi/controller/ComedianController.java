@@ -1,7 +1,6 @@
 package com.example.springbootmockapi.controller;
 
 import com.example.springbootmockapi.dto.comedian.ComedianDTO;
-import com.example.springbootmockapi.dto.comedian.CreateComedianDTO;
 import com.example.springbootmockapi.response.CMSResponse;
 import com.example.springbootmockapi.service.ComedianService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,25 +58,25 @@ public class ComedianController {
 
     /***
      * to create a new comedian
-     * @param newCreateComedianDTO - CreateComedianDTO object to create a new comedian
+     * @param newComedianDTO - CreateComedianDTO object to create a new comedian
      * @return ResponseEntity
      */
     @PostMapping
-    public ResponseEntity<CMSResponse<ComedianDTO>> newComedian(@Valid @RequestBody CreateComedianDTO newCreateComedianDTO) {
-        ComedianDTO comedian = comedianService.createComedian(newCreateComedianDTO);
+    public ResponseEntity<CMSResponse<ComedianDTO>> newComedian(@Valid @RequestBody ComedianDTO newComedianDTO) {
+        ComedianDTO comedian = comedianService.createComedian(newComedianDTO);
         CMSResponse<ComedianDTO> cmsResponse = new CMSResponse<>(HttpStatus.OK, comedian, "Comedian is created successfully");
         return new ResponseEntity<>(cmsResponse, HttpStatus.CREATED);
     }
 
     /***
      * to change a comedian
-     * @param newCreateComedian - comedian instance to be created
+     * @param newComedianDTO - comedian instance to be created
      * @param id - id of comedian to be changed
      * @return updatedComedian
      */
     @PutMapping("/{id}")
-    public ResponseEntity<CMSResponse<ComedianDTO>> replaceComedian(@RequestBody CreateComedianDTO newCreateComedian, @PathVariable String id) {
-        ComedianDTO updatedComedian = comedianService.updateComedian(id, newCreateComedian);
+    public ResponseEntity<CMSResponse<ComedianDTO>> replaceComedian(@RequestBody ComedianDTO newComedianDTO, @PathVariable String id) {
+        ComedianDTO updatedComedian = comedianService.updateComedian(id, newComedianDTO);
         CMSResponse<ComedianDTO> cmsResponse;
         if (updatedComedian == null) {
             cmsResponse = new CMSResponse<>(HttpStatus.NOT_FOUND, null, "Comedian can't found to be updated.");

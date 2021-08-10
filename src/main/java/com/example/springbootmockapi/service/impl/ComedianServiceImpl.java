@@ -1,7 +1,6 @@
 package com.example.springbootmockapi.service.impl;
 
 import com.example.springbootmockapi.dto.comedian.ComedianDTO;
-import com.example.springbootmockapi.dto.comedian.CreateComedianDTO;
 import com.example.springbootmockapi.entity.comedian.Comedian;
 import com.example.springbootmockapi.mapper.ComedianMapper;
 import com.example.springbootmockapi.repository.ComedianRepository;
@@ -43,12 +42,11 @@ public class ComedianServiceImpl implements ComedianService {
 
     /***
      * to create a new comedian
-     * @param createComedianDTO - A CreateComedianDTO object
+     * @param comedianDTO - A CreateComedianDTO object
      * @return comedian
      */
     @Override
-    public ComedianDTO createComedian(CreateComedianDTO createComedianDTO) {
-        ComedianDTO comedianDTO =  comedianMapper.createComedianDTOToComedianDTO(createComedianDTO);
+    public ComedianDTO createComedian(ComedianDTO comedianDTO) {
         comedianRepository.save(comedianMapper.comedianDTOToComedian(comedianDTO));
         return comedianDTO;
     }
@@ -56,13 +54,12 @@ public class ComedianServiceImpl implements ComedianService {
     /***
      * to update a comedian
      * @param id - id of the Comedian to be updated
-     * @param newCreateComedianDTO - A CreateComedianDTO object
+     * @param newComedianDTO - A CreateComedianDTO object
      * @return comedian
      */
     @Override
-    public ComedianDTO updateComedian(String id, CreateComedianDTO newCreateComedianDTO) {
+    public ComedianDTO updateComedian(String id, ComedianDTO newComedianDTO) {
 
-        ComedianDTO newComedianDTO = comedianMapper.createComedianDTOToComedianDTO(newCreateComedianDTO);
         Optional<Comedian> updatedComedian = comedianRepository.findById(id)
                 .map(singleComedian -> {
                     singleComedian.setName(newComedianDTO.getName());
