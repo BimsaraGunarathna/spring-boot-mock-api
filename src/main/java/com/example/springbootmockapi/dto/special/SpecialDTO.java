@@ -1,7 +1,6 @@
 package com.example.springbootmockapi.dto.special;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
@@ -11,7 +10,6 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 public class SpecialDTO {
 
-    @Id
     private String id;
 
     @JsonProperty("name")

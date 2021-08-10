@@ -1,9 +1,7 @@
 package com.example.springbootmockapi.controller;
 
-import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.dto.special.SpecialDTO;
-import com.example.springbootmockapi.entity.special.Special;
 import com.example.springbootmockapi.response.CMSResponse;
 import com.example.springbootmockapi.service.SpecialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +32,9 @@ public class SpecialController {
      * @return specialsResponse
      */
     @GetMapping()
-    public ResponseEntity<CMSResponse> getSpecials() {
+    public ResponseEntity<CMSResponse<Collection<SpecialDTO>>> getSpecials() {
         Collection<SpecialDTO> specials = specialService.getSpecials();
-        CMSResponse response = new CMSResponse(HttpStatus.CREATED, specials,"Specials are retrieved successfully.");
+        CMSResponse<Collection<SpecialDTO>> response = new CMSResponse<>(HttpStatus.CREATED, specials,"Specials are retrieved successfully.");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -46,7 +44,7 @@ public class SpecialController {
      * @return ResponseEntity
      */
     @PostMapping()
-    public ResponseEntity<CMSResponse> newSpecial(@Valid @RequestBody CreateSpecialDTO createSpecialDTO) {
+    public ResponseEntity<CMSResponse<SpecialDTO>> newSpecial(@Valid @RequestBody CreateSpecialDTO createSpecialDTO) {
         SpecialDTO special = specialService.createSpecial(createSpecialDTO);
         CMSResponse<SpecialDTO> cmsResponse = new CMSResponse<>(HttpStatus.CREATED, special, "A new comedian is created.");
 
@@ -59,7 +57,7 @@ public class SpecialController {
      * @return special
      */
     @GetMapping("/{id}")
-    public ResponseEntity<CMSResponse> getASpecial (@PathVariable String id) {
+    public ResponseEntity<CMSResponse<SpecialDTO>> getASpecial (@PathVariable String id) {
         SpecialDTO fetchedSpecialDTO = specialService.getASpecial(id);
         CMSResponse<SpecialDTO> cmsResponse;
         if (fetchedSpecialDTO == null) {
@@ -77,7 +75,7 @@ public class SpecialController {
      * @return updatedSpecial
      */
     @PutMapping("/{id}")
-    public ResponseEntity<CMSResponse> replaceSpecial(@RequestBody CreateSpecialDTO newCreateSpecialDTO, @PathVariable String id) {
+    public ResponseEntity<CMSResponse<SpecialDTO>> replaceSpecial(@RequestBody CreateSpecialDTO newCreateSpecialDTO, @PathVariable String id) {
         SpecialDTO updatedSpecialDTO = specialService.updateSpecial(id, newCreateSpecialDTO);
 
         CMSResponse<SpecialDTO> cmsResponse;

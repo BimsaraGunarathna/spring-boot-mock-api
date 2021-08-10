@@ -23,7 +23,6 @@ public class ComedianServiceImpl implements ComedianService {
     @Autowired
     private ComedianRepository comedianRepository;
 
-    //private ComedianMapper comedianMapper = Mappers.getMapper(ComedianMapperImpl.class);
     @Autowired
     private ComedianMapper comedianMapper;
 
@@ -34,11 +33,11 @@ public class ComedianServiceImpl implements ComedianService {
      */
     @Override
     public ComedianDTO getAComedian(String id) {
-        if (comedianRepository.existsById(id)) {
             Optional<Comedian> optionalComedian =  comedianRepository.findById(id);
-            ComedianDTO fetchedComedianDTO = comedianMapper.comedianToComedianDTO(optionalComedian.get());
-            return fetchedComedianDTO;
-        }
+            if (optionalComedian.isPresent()) {
+                return comedianMapper.comedianToComedianDTO(optionalComedian.get());
+            }
+
         return null;
     }
 
@@ -64,18 +63,13 @@ public class ComedianServiceImpl implements ComedianService {
     public ComedianDTO updateComedian(String id, CreateComedianDTO newCreateComedianDTO) {
 
         ComedianDTO newComedianDTO = comedianMapper.createComedianDTOToComedianDTO(newCreateComedianDTO);
-        if(comedianRepository.existsById(id)) {
-            comedianRepository.findById(id)
-                    .map(singleComedian -> {
-                        singleComedian.setName(newComedianDTO.getName());
-                        singleComedian.setRole(newComedianDTO.getRole());
-                        return comedianRepository.save(singleComedian);
-                    })
-                    .orElseGet(() -> {
-                        newComedianDTO.setId(id);
-                        Comedian newComedian = comedianMapper.comedianDTOToComedian(newComedianDTO);
-                        return comedianRepository.save(newComedian);
-                    });
+        Optional<Comedian> updatedComedian = comedianRepository.findById(id)
+                .map(singleComedian -> {
+                    singleComedian.setName(newComedianDTO.getName());
+                    singleComedian.setRole(newComedianDTO.getRole());
+                    return comedianRepository.save(singleComedian);
+                });
+        if(updatedComedian.isPresent()) {
             return newComedianDTO;
         }
         return null;
@@ -90,7 +84,6 @@ public class ComedianServiceImpl implements ComedianService {
     public boolean deleteComedian(String id) {
         //handle the event comedian doesn't exits
         if (comedianRepository.existsById(id)) {
-            System.out.println(comedianRepository.findById(id));
             comedianRepository.deleteById(id);
             return true;
         }

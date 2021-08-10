@@ -5,6 +5,7 @@ import com.example.springbootmockapi.entity.comedian.Comedian;
 import com.example.springbootmockapi.mapper.ComedianMapper;
 import org.springframework.stereotype.Component;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 
 @Component
@@ -38,16 +39,18 @@ public class ComedianMapperImpl implements ComedianMapper {
     @Override
     public Collection<ComedianDTO> comediansToComedianDTOs(Collection<Comedian> comedians) {
         if( comedians == null) {
-            return null;
+            return Collections.emptyList();
         }
 
         Collection<ComedianDTO> comedianDTOs = new HashSet<>();
         for(Comedian comedian : comedians ) {
-            comedianDTOs.add(new ComedianDTO(
-                    comedian.getId(),
-                    comedian.getName(),
-                    comedian.getRole()
-            ));
+            comedianDTOs.add(
+                    new ComedianDTO(
+                        comedian.getId(),
+                        comedian.getName(),
+                        comedian.getRole()
+                    )
+            );
         }
         return comedianDTOs;
     }
@@ -62,12 +65,11 @@ public class ComedianMapperImpl implements ComedianMapper {
         if(comedian == null) {
             return null;
         }
-        ComedianDTO comedianDTO = new ComedianDTO(
+        return new ComedianDTO(
                 comedian.getId(),
                 comedian.getName(),
                 comedian.getRole()
         );
-        return comedianDTO;
     }
 
     /**
@@ -81,11 +83,10 @@ public class ComedianMapperImpl implements ComedianMapper {
             return null;
         }
 
-        ComedianDTO comedianDTO = new ComedianDTO(
+
+        return new ComedianDTO(
                 createComedianDTO.getName(),
                 createComedianDTO.getRole()
         );
-
-        return comedianDTO;
     }
 }

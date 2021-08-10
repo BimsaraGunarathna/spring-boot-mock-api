@@ -7,6 +7,7 @@ import com.example.springbootmockapi.mapper.SpecialMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 
 @Component
@@ -62,7 +63,7 @@ public class SpecialMapperImpl implements SpecialMapper {
     @Override
     public Collection<SpecialDTO> specialsToSpecialDTOs(Collection<Special> specials) {
         if(specials == null) {
-            return null;
+            return Collections.emptyList();
         }
 
         Collection<SpecialDTO> specialDTOs = new HashSet<>();

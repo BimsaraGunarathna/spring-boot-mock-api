@@ -1,9 +1,6 @@
 package com.example.springbootmockapi.service;
-
-import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.dto.special.SpecialDTO;
-import com.example.springbootmockapi.entity.special.Special;
 
 import java.util.Collection;
 

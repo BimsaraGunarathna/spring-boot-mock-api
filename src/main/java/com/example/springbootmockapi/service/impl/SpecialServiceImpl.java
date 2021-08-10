@@ -1,16 +1,11 @@
 package com.example.springbootmockapi.service.impl;
-
-import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.dto.special.SpecialDTO;
 import com.example.springbootmockapi.entity.special.Special;
-import com.example.springbootmockapi.mapper.ComedianMapper;
 import com.example.springbootmockapi.mapper.SpecialMapper;
-import com.example.springbootmockapi.repository.ComedianRepository;
 import com.example.springbootmockapi.repository.SpecialRepository;
 import com.example.springbootmockapi.service.ComedianService;
 import com.example.springbootmockapi.service.SpecialService;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +23,6 @@ public class SpecialServiceImpl implements SpecialService {
     @Autowired
     private SpecialMapper specialMapper;
 
-    //private SpecialMapper specialMapper = Mappers.getMapper(SpecialMapper.class);
-
 
     @Autowired
     private SpecialRepository repository;
@@ -46,10 +39,9 @@ public class SpecialServiceImpl implements SpecialService {
      */
     @Override
     public SpecialDTO getASpecial(String id) {
-        if(repository.existsById(id)) {
-            Optional<Special> optionalSpecial =  repository.findById(id);
-            System.out.println(optionalSpecial.get().getDescription());
-            return specialMapper.specialToSpecialDTO(optionalSpecial.get());
+        Optional<Special> pickedSpecial =  repository.findById(id);
+        if(pickedSpecial.isPresent()) {
+            return specialMapper.specialToSpecialDTO(pickedSpecial.get());
         }
         return null;
     }
@@ -77,18 +69,13 @@ public class SpecialServiceImpl implements SpecialService {
     @Override
     public SpecialDTO updateSpecial(String id, CreateSpecialDTO newCreateSpecialDTO) {
         SpecialDTO newSpecialDTO = specialMapper.createSpecialDTOToSpecialDTO(newCreateSpecialDTO);
-        if (repository.existsById(id)) {
-            repository.findById(id)
-                    .map(singleSpecial -> {
-                        singleSpecial.setName(newSpecialDTO.getName());
-                        singleSpecial.setDescription(newSpecialDTO.getDescription());
-                        return repository.save(singleSpecial);
-                    })
-                    .orElseGet(() -> {
-                        newSpecialDTO.setId(id);
-                        Special newSpecial = specialMapper.specialDTOToSpecial(newSpecialDTO);
-                        return repository.save(newSpecial);
-                    });
+        Optional<Special> newSpecial = repository.findById(id)
+                .map(singleSpecial -> {
+                    singleSpecial.setName(newSpecialDTO.getName());
+                    singleSpecial.setDescription(newSpecialDTO.getDescription());
+                    return repository.save(singleSpecial);
+                });
+        if(newSpecial.isPresent()) {
             return newSpecialDTO;
         }
         return null;
@@ -104,7 +91,6 @@ public class SpecialServiceImpl implements SpecialService {
     public boolean deleteSpecial(String id) {
         //handle the event comedian doesn't exits
         if (repository.existsById(id)) {
-            System.out.println(repository.findById(id));
             repository.deleteById(id);
             return true;
         }
@@ -118,7 +104,6 @@ public class SpecialServiceImpl implements SpecialService {
     @Override
     public Collection<SpecialDTO> getSpecials() {
         Collection<Special> specials = repository.findAll();
-        Collection<SpecialDTO> specialDTOs = specialMapper.specialsToSpecialDTOs(specials);
-        return specialDTOs;
+        return specialMapper.specialsToSpecialDTOs(specials);
     }
 }

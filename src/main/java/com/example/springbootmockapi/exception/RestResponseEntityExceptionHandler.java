@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
-public class RestResponseEntityExceptionAdvisor extends ResponseEntityExceptionHandler {
+public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ComedianNotFoundException.class)
     public ResponseEntity<Object> handleComedianNotFoundException(
             ComedianNotFoundException ex, WebRequest request) {

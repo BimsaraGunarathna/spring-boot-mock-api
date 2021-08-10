@@ -2,7 +2,6 @@ package com.example.springbootmockapi.mapper;
 
 import com.example.springbootmockapi.dto.comedian.ComedianDTO;
 import com.example.springbootmockapi.dto.comedian.CreateComedianDTO;
-import com.example.springbootmockapi.dto.special.CreateSpecialDTO;
 import com.example.springbootmockapi.entity.comedian.Comedian;
 
 import org.mapstruct.Mapper;

@@ -19,6 +19,7 @@ import java.util.Collection;
  * @author bimsa
  * @since 21/7
  */
+//remove this and check
 @Validated
 @RestController
 @RequestMapping("/comedian")
@@ -32,7 +33,7 @@ public class ComedianController {
      * @return comedians
      */
     @GetMapping
-    public ResponseEntity<CMSResponse> getComedians() {
+    public ResponseEntity<CMSResponse<Collection<ComedianDTO>>> getComedians() {
         Collection<ComedianDTO> retrievedComedians = comedianService.getComedians();
         CMSResponse<Collection<ComedianDTO>> cmsResponse = new CMSResponse<>(HttpStatus.OK, retrievedComedians, "Comedians are retrieved successfully");
         return new ResponseEntity<>(cmsResponse, HttpStatus.OK);
@@ -44,8 +45,7 @@ public class ComedianController {
      * @return comedian
      */
     @GetMapping( "/{id}")
-    public ResponseEntity<CMSResponse> getAComedian(@PathVariable String id) {
-        System.out.println( id);
+    public ResponseEntity<CMSResponse<ComedianDTO>> getAComedian(@PathVariable String id) {
         ComedianDTO fetchedComedianDTO = comedianService.getAComedian(id);
         CMSResponse<ComedianDTO> cmsResponse;
         if (fetchedComedianDTO == null) {
@@ -63,10 +63,9 @@ public class ComedianController {
      * @return ResponseEntity
      */
     @PostMapping
-    public ResponseEntity<CMSResponse> newComedian(@Valid @RequestBody CreateComedianDTO newCreateComedianDTO) {
+    public ResponseEntity<CMSResponse<ComedianDTO>> newComedian(@Valid @RequestBody CreateComedianDTO newCreateComedianDTO) {
         ComedianDTO comedian = comedianService.createComedian(newCreateComedianDTO);
         CMSResponse<ComedianDTO> cmsResponse = new CMSResponse<>(HttpStatus.OK, comedian, "Comedian is created successfully");
-        System.out.println("@POST: " + newCreateComedianDTO.getName());
         return new ResponseEntity<>(cmsResponse, HttpStatus.CREATED);
     }
 
@@ -77,15 +76,15 @@ public class ComedianController {
      * @return updatedComedian
      */
     @PutMapping("/{id}")
-    public ResponseEntity<CMSResponse> replaceComedian(@RequestBody CreateComedianDTO newCreateComedian, @PathVariable String id) {
+    public ResponseEntity<CMSResponse<ComedianDTO>> replaceComedian(@RequestBody CreateComedianDTO newCreateComedian, @PathVariable String id) {
         ComedianDTO updatedComedian = comedianService.updateComedian(id, newCreateComedian);
-        CMSResponse<ComedianDTO> _cmsResponse;
+        CMSResponse<ComedianDTO> cmsResponse;
         if (updatedComedian == null) {
-            _cmsResponse = new CMSResponse<>(HttpStatus.NOT_FOUND, null, "Comedian can't found to be updated.");
+            cmsResponse = new CMSResponse<>(HttpStatus.NOT_FOUND, null, "Comedian can't found to be updated.");
         } else {
-            _cmsResponse = new CMSResponse<>(HttpStatus.OK, updatedComedian, "Comedian is updated successfully");
+            cmsResponse = new CMSResponse<>(HttpStatus.OK, updatedComedian, "Comedian is updated successfully");
         }
-        return new ResponseEntity<>( _cmsResponse, HttpStatus.OK);
+        return new ResponseEntity<>( cmsResponse, HttpStatus.OK);
     }
 
     /***
