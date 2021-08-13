@@ -25,6 +25,11 @@ public class ComedianServiceImpl implements ComedianService {
     @Autowired
     private ComedianMapper comedianMapper;
 
+    public ComedianServiceImpl(ComedianRepository comedianRepository, ComedianMapper comedianMapper) {
+        this.comedianRepository = comedianRepository;
+        this.comedianMapper = comedianMapper;
+    }
+
     /***
      * to search and return single Comedian from Repository.
      * @param id - id of the Comedian to be retrieved

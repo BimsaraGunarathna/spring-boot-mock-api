@@ -9,4 +9,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @since 7/19/2021
  */
 public interface ComedianRepository extends MongoRepository<Comedian, String> {
+
 }
